@@ -38,4 +38,4 @@ Found an error or have a suggestion? Please [open an issue](https://github.com/s
 
 ## License
 
-Content is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+Content is licensed under [MIT](LICENSE).
