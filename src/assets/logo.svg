@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <!-- Background circle (planet/moon) -->
+  <circle cx="20" cy="20" r="18" fill="#2d1f47" stroke="#9d4edd" stroke-width="1.5"/>
+  
+  <!-- Anchor symbol -->
+  <g fill="none" stroke="#e0aaff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Ring at top -->
+    <circle cx="20" cy="12" r="3"/>
+    <!-- Vertical line -->
+    <line x1="20" y1="15" x2="20" y2="30"/>
+    <!-- Horizontal crossbar -->
+    <line x1="14" y1="20" x2="26" y2="20"/>
+    <!-- Bottom curves (anchor flukes) -->
+    <path d="M12 28 Q12 30 14 30 L20 30"/>
+    <path d="M28 28 Q28 30 26 30 L20 30"/>
+  </g>
+  
+  <!-- Small stars -->
+  <circle cx="8" cy="8" r="1" fill="#e0aaff" opacity="0.6"/>
+  <circle cx="32" cy="12" r="0.8" fill="#e0aaff" opacity="0.5"/>
+  <circle cx="6" cy="28" r="0.6" fill="#e0aaff" opacity="0.4"/>
+</svg>

@@ -1,0 +1,60 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+
+const parts = [
+  {
+    number: 'Part 1',
+    title: 'The Fundamentals',
+    description: 'Learn anchor-name, position-anchor, and position-area — the core building blocks for attaching elements to anchors.',
+    href: '/parts/fundamentals/',
+  },
+  {
+    number: 'Part 2',
+    title: 'Precise Control',
+    description: 'Go beyond the grid with anchor(), anchor-center, and anchor-size() for pixel-level positioning and sizing.',
+    href: '/parts/precise-control/',
+  },
+  {
+    number: 'Part 3',
+    title: 'Fallbacks',
+    description: 'Handle overflow gracefully with position-try-fallbacks, @position-try rules, and position-try-order.',
+    href: '/parts/fallbacks/',
+  },
+  {
+    number: 'Part 4',
+    title: 'Scoping and Visibility',
+    description: 'Manage anchor relationships at scale with anchor-scope, implicit anchors, and position-visibility.',
+    href: '/parts/scoping-visibility/',
+  },
+];
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Anchor Positioning in Space',
+    template: 'splash',
+    hero: {
+      title: 'Anchor Positioning in Space',
+      tagline: 'A comprehensive guide to CSS Anchor Positioning — from fundamentals to advanced techniques.',
+    },
+  }}
+  hasSidebar={false}
+>
+  <div class="landing-container">
+    <p class="intro">
+      CSS Anchor Positioning lets you attach absolutely positioned elements to other elements on the page — 
+      <strong>no JavaScript required</strong>. Build tooltips, dropdowns, popovers, and more with native CSS. 
+      This four-part series takes you from the basics to production-ready patterns.
+    </p>
+
+    <nav class="parts-grid" aria-label="Series parts">
+      {parts.map((part) => (
+        <a href={part.href} class="part-card">
+          <span class="part-number">{part.number}</span>
+          <h2>{part.title}</h2>
+          <p>{part.description}</p>
+        </a>
+      ))}
+    </nav>
+  </div>
+</StarlightPage>

@@ -1,0 +1,197 @@
+/* Space Theme for Anchor Positioning in Space */
+
+:root {
+  /* Accent colours - nebula purple/magenta */
+  --sl-color-accent-low: #2d1f47;
+  --sl-color-accent: #9d4edd;
+  --sl-color-accent-high: #e0aaff;
+
+  /* Gray scale - deep space blues */
+  --sl-color-gray-1: #e6e8f0;
+  --sl-color-gray-2: #c1c5d6;
+  --sl-color-gray-3: #8b92ab;
+  --sl-color-gray-4: #5c6380;
+  --sl-color-gray-5: #3d4259;
+  --sl-color-gray-6: #252a3d;
+  --sl-color-gray-7: #0d1021;
+
+  /* Background - deep space */
+  --sl-color-bg: #0d1021;
+  --sl-color-bg-nav: #12152a;
+  --sl-color-bg-sidebar: #0d1021;
+
+  /* Text */
+  --sl-color-text: #e6e8f0;
+  --sl-color-text-accent: #e0aaff;
+
+  /* Borders */
+  --sl-color-hairline: #2d3555;
+  --sl-color-hairline-light: #1e2340;
+
+  /* White for high contrast elements */
+  --sl-color-white: #ffffff;
+  --sl-color-black: #0d1021;
+}
+
+/* Dark mode is default for space theme */
+:root[data-theme='light'] {
+  /* Keep dark theme even in light mode for consistency */
+  --sl-color-accent-low: #2d1f47;
+  --sl-color-accent: #9d4edd;
+  --sl-color-accent-high: #7b2cbf;
+
+  --sl-color-gray-1: #0d1021;
+  --sl-color-gray-2: #1e2340;
+  --sl-color-gray-3: #3d4259;
+  --sl-color-gray-4: #5c6380;
+  --sl-color-gray-5: #8b92ab;
+  --sl-color-gray-6: #c1c5d6;
+  --sl-color-gray-7: #e6e8f0;
+
+  --sl-color-bg: #f0f1f7;
+  --sl-color-bg-nav: #e6e8f0;
+  --sl-color-bg-sidebar: #f0f1f7;
+
+  --sl-color-text: #0d1021;
+  --sl-color-text-accent: #7b2cbf;
+
+  --sl-color-hairline: #c1c5d6;
+  --sl-color-hairline-light: #e6e8f0;
+}
+
+/* Starry background effect for the main content area */
+body {
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 50px 160px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 160px 120px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 200px 50px, rgba(157, 78, 221, 0.6), transparent),
+    radial-gradient(1px 1px at 250px 180px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 300px 90px, rgba(255, 255, 255, 0.3), transparent);
+  background-size: 350px 200px;
+  background-color: var(--sl-color-bg);
+}
+
+/* Code blocks with space-inspired styling */
+.expressive-code {
+  --ec-brdCol: var(--sl-color-hairline);
+}
+
+/* Links with glow effect on hover */
+a:hover {
+  text-shadow: 0 0 0.5rem var(--sl-color-accent);
+}
+
+/* Card styling for landing page */
+.sl-link-card {
+  background: linear-gradient(
+    135deg,
+    rgba(45, 31, 71, 0.6) 0%,
+    rgba(13, 16, 33, 0.8) 100%
+  );
+  border: 1px solid var(--sl-color-hairline);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sl-link-card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 2rem rgba(157, 78, 221, 0.2);
+  border-color: var(--sl-color-accent);
+}
+
+/* Hero section styling */
+.hero {
+  text-align: center;
+  padding-block: 4rem;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  background: linear-gradient(135deg, var(--sl-color-white) 0%, var(--sl-color-accent-high) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero .tagline {
+  font-size: 1.25rem;
+  color: var(--sl-color-gray-2);
+  max-inline-size: 40rem;
+  margin-inline: auto;
+  margin-block-start: 1rem;
+}
+
+/* Part cards grid */
+.parts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-block-start: 3rem;
+}
+
+.part-card {
+  background: linear-gradient(
+    135deg,
+    rgba(45, 31, 71, 0.4) 0%,
+    rgba(13, 16, 33, 0.6) 100%
+  );
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--sl-color-text);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.part-card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 2rem rgba(157, 78, 221, 0.25);
+  border-color: var(--sl-color-accent);
+}
+
+.part-card .part-number {
+  font-size: 0.875rem;
+  color: var(--sl-color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-block-end: 0.5rem;
+}
+
+.part-card h2 {
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem;
+  color: var(--sl-color-white);
+}
+
+.part-card p {
+  font-size: 0.9375rem;
+  color: var(--sl-color-gray-2);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Landing page container */
+.landing-container {
+  max-inline-size: 64rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  padding-block: 2rem 4rem;
+}
+
+/* Intro text */
+.intro {
+  max-inline-size: 48rem;
+  margin-inline: auto;
+  text-align: center;
+  color: var(--sl-color-gray-2);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin-block-start: 2rem;
+}
+
+.intro strong {
+  color: var(--sl-color-text);
+}

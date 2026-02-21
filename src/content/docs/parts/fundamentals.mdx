@@ -1,0 +1,420 @@
+---
+title: "The Fundamentals"
+description: "Learn anchor-name, position-anchor, and position-area — the core building blocks for attaching elements to anchors."
+sidebar:
+  order: 1
+---
+
+
+You know that thing where you need to position a tooltip above a button? Or a dropdown below a nav item? Or a context menu next to whatever you just right-clicked?
+
+For years, we've been solving this with JavaScript. Libraries like Popper.js and Floating UI exist specifically because CSS couldn't express "put this box relative to *that* box" in a clean way. You'd either do brittle manual positioning, or ship a dependency to do the maths for you.
+
+CSS Anchor Positioning changes that. It's a native way to say "this element should position itself relative to that element"—and it handles the relationship declaratively, right in your stylesheet.
+
+Let's dig in.
+
+---
+
+## The Core Idea
+
+Anchor positioning introduces a named relationship between two elements:
+
+1. **The anchor** — a reference point on the page
+2. **The positioned element** — something that attaches itself to that anchor
+
+The anchor doesn't know or care who's attaching to it. It just exists and has a name. The positioned element does all the reaching.
+
+---
+
+## Naming Your Anchor
+
+First, you give an element an anchor name using the `anchor-name` property:
+
+```css
+.my-button {
+  anchor-name: --tooltip-anchor;
+}
+```
+
+A few things to note:
+
+- **The `--` prefix is required.** Anchor names use the `<dashed-ident>` syntax—same as CSS custom properties.
+- **Names don't have to be unique.** Multiple elements can share the same name (more on what happens then shortly).
+- **An element can have multiple names.** Useful when different things anchor to it for different reasons: `anchor-name: --tooltip-anchor, --menu-anchor;`
+
+---
+
+## Pointing to Your Anchor
+
+The positioned element needs to know which anchor to attach to. That's what `position-anchor` does:
+
+```css
+.tooltip {
+  position: absolute; /* or fixed */
+  position-anchor: --tooltip-anchor;
+}
+```
+
+This sets the **default anchor** for the element. Once established, other anchor-positioning properties will reference this anchor automatically.
+
+### What if multiple elements share the same anchor name?
+
+The positioned element attaches to the **last one in DOM order**. This can actually be useful for certain patterns, but if you need more control, the `anchor-scope` property (which we'll cover in a future post) lets you limit which anchors are visible to which positioned elements.
+
+---
+
+## The Shortcut: Implicit Anchors
+
+If you're using the Popover API, you get anchor positioning for free—no `anchor-name` or `position-anchor` needed.
+
+```html
+<button popovertarget="my-popover">Open</button>
+<div id="my-popover" popover>Content here</div>
+```
+
+The `popovertarget` attribute creates an implicit anchor relationship. The browser wires it up automatically. Your CSS can jump straight to *where* you want the popover:
+
+```css
+[popover] {
+  position-area: block-end;
+}
+```
+
+That's it. The popover knows it's anchored to its triggering button without you spelling it out.
+
+---
+
+## Placing the Element: The `position-area` Property
+
+Now for the fun part. You've established the relationship—but where exactly should the positioned element sit relative to its anchor?
+
+`position-area` answers that question using a mental model of a 3×3 grid.
+
+### The Grid
+
+When you use `position-area`, CSS conceptually draws a grid around your anchor:
+
+```
+┌─────────────┬─────────────┬─────────────┐
+│             │             │             │
+│  top left   │     top     │  top right  │
+│             │             │             │
+├─────────────┼─────────────┼─────────────┤
+│             │             │             │
+│    left     │   ANCHOR    │    right    │
+│             │             │             │
+├─────────────┼─────────────┼─────────────┤
+│             │             │             │
+│ bottom left │   bottom    │ bottom right│
+│             │             │             │
+└─────────────┴─────────────┴─────────────┘
+```
+
+The **center cell is where your anchor lives**. The surrounding cells are regions where you can place your positioned element. The outer edges extend to the containing block (usually the viewport for `position: fixed`).
+
+### Basic Usage
+
+Specify one or two keywords to pick your region:
+
+```css
+.tooltip {
+  position: fixed;
+  position-anchor: --button;
+  position-area: top; /* Centered above the anchor */
+}
+```
+
+With a single keyword, the other axis defaults to `span-all`—meaning it spans the full row or column:
+
+```css
+position-area: top;
+/* Equivalent to: position-area: top span-all; */
+```
+
+```
+┌─────────────────────────────────────────┐
+│           POSITIONED ELEMENT            │  ← entire top row
+├─────────────┬─────────────┬─────────────┤
+│             │   ANCHOR    │             │
+├─────────────┼─────────────┼─────────────┤
+│             │             │             │
+└─────────────┴─────────────┴─────────────┘
+```
+
+Two keywords pin you to a specific cell:
+
+```css
+position-area: top left;
+```
+
+```
+┌─────────────┬─────────────┬─────────────┐
+│  ELEMENT    │             │             │
+├─────────────┼─────────────┼─────────────┤
+│             │   ANCHOR    │             │
+├─────────────┼─────────────┼─────────────┤
+│             │             │             │
+└─────────────┴─────────────┴─────────────┘
+```
+
+---
+
+## Physical vs. Logical Keywords
+
+The keywords come in different flavours:
+
+| Type | Examples | When to Use |
+|------|----------|-------------|
+| **Physical** | `top`, `bottom`, `left`, `right` | When direction is absolute |
+| **Logical** | `block-start`, `block-end`, `inline-start`, `inline-end` | When adapting to writing modes (RTL, vertical text) |
+
+In a left-to-right, top-to-bottom language, `top` and `block-start` mean the same thing. But if your UI needs to work across writing modes, the logical keywords will adapt automatically.
+
+**Important:** You can't mix physical and logical keywords in the same value. Pick one family and stick with it:
+
+```css
+/* ✅ Valid — both physical */
+position-area: top right;
+
+/* ✅ Valid — both logical */
+position-area: block-start inline-end;
+
+/* ❌ Invalid — mixed families */
+position-area: top inline-end;
+```
+
+---
+
+## Spanning Multiple Cells
+
+Sometimes you want your element to span two adjacent cells. The `span-*` keywords handle this:
+
+| Keyword | Spans |
+|---------|-------|
+| `span-top` | top + center rows |
+| `span-bottom` | center + bottom rows |
+| `span-left` | left + center columns |
+| `span-right` | center + right columns |
+| `span-all` | all three |
+
+Logical equivalents follow the same pattern: `span-block-start`, `span-inline-end`, etc.
+
+### Example: A Left-Aligned Dropdown
+
+```css
+.dropdown-menu {
+  position: fixed;
+  position-anchor: --nav-item;
+  position-area: block-end span-inline-end;
+}
+```
+
+```
+┌─────────────┬─────────────┬─────────────┐
+│             │             │             │
+├─────────────┼─────────────┼─────────────┤
+│             │  NAV ITEM   │             │
+├─────────────┼─────────────┼─────────────┤
+│             │ MENU STARTS │ CAN EXTEND  │
+│             │ HERE        │ RIGHTWARD   │
+└─────────────┴─────────────┴─────────────┘
+```
+
+The menu's left edge aligns with the nav item, and it has room to grow rightward if the content is wide.
+
+---
+
+## Default Alignment: Hugging the Anchor
+
+Here's something that might surprise you: when you use `position-area`, the element automatically aligns *toward* the anchor.
+
+If you place something in the `top` region, it doesn't float at the top of that region—it hugs the bottom edge, sitting right against the anchor:
+
+```
+┌─────────────────────────────────────────┐
+│                                         │
+│                                         │
+│              ┌──────────┐               │ ← element hugs bottom
+└──────────────┤ TOOLTIP  ├───────────────┘   of its region
+               └──────────┘
+               ┌──────────┐
+               │  ANCHOR  │
+               └──────────┘
+```
+
+This "toward the anchor" default is usually exactly what you want. No extra alignment properties needed for most cases.
+
+The defaults vary based on what region you select:
+
+| Position Area | Default Alignment |
+|---------------|-------------------|
+| `top` | Bottom of region (toward anchor) |
+| `bottom right` | Top-left corner of region (toward anchor) |
+| `center` | Centered in both axes |
+| Single keyword with `span-all` | `anchor-center` (centered on the anchor itself) |
+
+---
+
+## What `position-area` Actually Does
+
+Here's an important detail: `position-area` doesn't just nudge your element around. It **redefines the containing block**.
+
+When you write:
+
+```css
+position-area: top;
+```
+
+You're saying "treat the top region of the grid as this element's containing block." That means:
+
+- `width: 100%` = 100% of that region
+- `inset: 0` fills that region
+- Percentage-based sizing is relative to that region
+
+This is powerful. Your positioned element can size itself naturally to fit the available space in its designated region.
+
+### A Practical Gotcha
+
+Because you're setting the containing block, not the element's size, you might need explicit sizing to fill it:
+
+```css
+.autocomplete-list {
+  position: fixed;
+  position-anchor: --search-input;
+  position-area: block-end center;
+  
+  /* The region matches the input's width,
+     but we need to explicitly fill it */
+  inline-size: 100%;
+  box-sizing: border-box; /* Don't forget this! */
+}
+```
+
+Without `box-sizing: border-box`, any padding or border will cause your element to exceed the anchor's width—anchor positioning doesn't exempt you from box model fundamentals.
+
+---
+
+## A Complete Example
+
+Let's put it all together. Here's a tooltip that appears above a button:
+
+```css
+.button {
+  anchor-name: --btn;
+}
+
+.tooltip {
+  /* Positioning setup */
+  position: fixed;
+  position-anchor: --btn;
+  position-area: block-start;
+  
+  /* Styling */
+  max-inline-size: 20em;
+  padding: 0.5em 1em;
+  background: hsl(0 0% 15%);
+  color: white;
+  border-radius: 4px;
+}
+```
+
+The tooltip appears above the button, horizontally centered on it, and wraps at 20em if the text is long.
+
+With the Popover API, it's even simpler:
+
+```html
+<button popovertarget="tip">Hover me</button>
+<div id="tip" popover>Helpful information here</div>
+```
+
+```css
+[popover] {
+  position-area: block-start;
+  max-inline-size: 20em;
+}
+```
+
+No `anchor-name`. No `position-anchor`. The browser handles the relationship.
+
+---
+
+## Practice Exercises
+
+Theory only takes you so far. Try these:
+
+### Exercise 1
+
+Build a dropdown menu that appears **below** a navigation item, **left-aligned** with it, with room to extend rightward.
+
+<details>
+<summary>Solution</summary>
+
+```css
+position-area: block-end span-inline-end;
+```
+
+The `block-end` puts it below. The `span-inline-end` covers center + right columns, with default alignment pushing it left toward the anchor.
+
+</details>
+
+### Exercise 2
+
+Build a tooltip that appears **to the left** of an icon, **vertically centered** on it.
+
+<details>
+<summary>Solution</summary>
+
+```css
+position-area: inline-start;
+/* or simply: position-area: left; */
+```
+
+A single keyword defaults to `span-all` on the other axis, which triggers `anchor-center` alignment—centering the tooltip vertically on the icon.
+
+</details>
+
+### Exercise 3
+
+Build a notification popover that appears **above** a bell icon, **right-aligned** with it (right edges line up), with room to extend leftward.
+
+<details>
+<summary>Solution</summary>
+
+```css
+position-area: block-start span-inline-start;
+```
+
+The `span-inline-start` covers left + center columns. Default alignment pushes the element toward the non-spanned side (right), aligning its right edge with the anchor's right edge.
+
+</details>
+
+---
+
+## What's Next
+
+This covers the fundamentals—enough to build tooltips, dropdowns, popovers, and more with pure CSS. But anchor positioning has more to offer:
+
+- **`anchor()` function** — for precise, pixel-level control over positioning
+- **`anchor-size()`** — to size your element based on the anchor's dimensions
+- **Position fallbacks** — what to try when your preferred position causes overflow
+
+We'll tackle those in the next post.
+
+---
+
+## Browser Support
+
+As of late 2024, anchor positioning is supported in Chromium browsers (Chrome, Edge) and Safari. Firefox support is in progress. Check [caniuse.com](https://caniuse.com/css-anchor-positioning) for current status.
+
+For production use today, consider feature detection:
+
+```css
+@supports (anchor-name: --test) {
+  /* Anchor positioning styles */
+}
+```
+
+---
+
+*This is part 1 of a series on CSS Anchor Positioning. Next up: fine-tuning with `anchor()` and `anchor-size()`.*
