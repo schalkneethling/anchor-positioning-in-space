@@ -7,10 +7,6 @@ export default defineConfig({
     starlight({
       title: 'Anchor Positioning in Space',
       description: 'A comprehensive guide to CSS Anchor Positioning',
-      logo: {
-        src: './src/assets/logo.svg',
-        replacesTitle: false,
-      },
       social: {
         github: 'https://github.com/schalkneethling/anchor-positioning-in-space',
       },
