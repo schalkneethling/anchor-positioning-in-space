@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://anchorpositioning.space',
+  site: 'https://anchor-positioning-in-space.schalkneethling.com',
   integrations: [
     starlight({
       title: 'Anchor Positioning in Space',
@@ -42,7 +42,10 @@ export default defineConfig({
         },
         {
           tag: 'meta',
-          attrs: { property: 'og:image', content: 'https://anchorpositioning.space/apis-social-share.png' },
+          attrs: {
+            property: 'og:image',
+            content: 'https://anchor-positioning-in-space.schalkneethling.com/apis-social-share.png',
+          },
         },
         {
           tag: 'meta',
@@ -58,7 +61,10 @@ export default defineConfig({
         },
         {
           tag: 'meta',
-          attrs: { name: 'twitter:image', content: 'https://anchorpositioning.space/apis-social-share.png' },
+          attrs: {
+            name: 'twitter:image',
+            content: 'https://anchor-positioning-in-space.schalkneethling.com/apis-social-share.png',
+          },
         },
       ],
       customCss: ['./src/styles/space-theme.css'],
