@@ -1,0 +1,157 @@
+---
+import SiteHead from '../../components/SiteHead.astro';
+import '../../styles/space-theme.css';
+import PositionAreaPlayground from '../../components/PositionAreaPlayground.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteHead
+      title="position-area Playground | Anchor Positioning in Space"
+      description="Interactive playground for exploring CSS position-area values in anchor positioning."
+      pathname="/playground/position-area/"
+    />
+  </head>
+  <body>
+    <main class="playground-shell">
+      <header class="playground-header">
+        <a href="/" class="site-title">Anchor Positioning in Space</a>
+        <nav class="playground-nav" aria-label="Secondary">
+          <a href="/parts/fundamentals/">The Fundamentals</a>
+          <a href="/playground/position-area/" aria-current="page">position-area Playground</a>
+        </nav>
+      </header>
+
+      <section class="playground-intro">
+        <p class="playground-kicker">Visual Playground</p>
+        <h1><code>position-area</code> Playground</h1>
+        <p>
+          Explore how <code>position-area</code> values place an element
+          relative to its anchor using the 3&times;3 grid model. This console is
+          designed to show both the selected region and the final positioned box
+          so the mental model stays accurate.
+        </p>
+
+        <div class="playground-callout">
+          <p>
+            You are choosing a <strong>region of the implicit grid</strong>, not
+            directly placing the element&rsquo;s box.
+          </p>
+          <p>
+            The element is then aligned <strong>within that region</strong>,
+            usually toward the anchor.
+          </p>
+          <p>
+            Single-keyword values such as <code>top</code> or
+            <code>block-end</code> imply <code>span-all</code> on the other
+            axis.
+          </p>
+        </div>
+      </section>
+
+      <section class="playground-content">
+        <PositionAreaPlayground />
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(body) {
+    margin: 0;
+    min-block-size: 100vh;
+    color: var(--sl-color-text);
+    font-family: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+  }
+
+  .playground-shell {
+    max-inline-size: 88rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    padding-block-end: 3rem;
+  }
+
+  .playground-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    padding-block: 1rem;
+  }
+
+  .playground-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .playground-nav a {
+    color: var(--sl-color-gray-2);
+    text-decoration: none;
+  }
+
+  .playground-nav a[aria-current='page'],
+  .playground-nav a:hover {
+    color: var(--sl-color-text);
+  }
+
+  .playground-intro {
+    max-inline-size: 58rem;
+    padding-block: 2rem 1rem;
+  }
+
+  .playground-kicker {
+    margin: 0;
+    color: var(--sl-color-accent-high);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0.6rem 0 1rem;
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    line-height: 1;
+  }
+
+  .playground-intro > p:last-of-type {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .playground-callout {
+    margin-block: 1.5rem 2rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid rgba(224, 170, 255, 0.18);
+    border-radius: 0.9rem;
+    background: linear-gradient(
+      155deg,
+      rgba(45, 31, 71, 0.35) 0%,
+      rgba(13, 16, 33, 0.28) 100%
+    );
+  }
+
+  .playground-callout p {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    line-height: 1.65;
+  }
+
+  .playground-callout p + p {
+    margin-block-start: 0.55rem;
+  }
+
+  .playground-callout strong {
+    color: var(--sl-color-text);
+  }
+
+  @media (max-width: 720px) {
+    .playground-header {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+</style>

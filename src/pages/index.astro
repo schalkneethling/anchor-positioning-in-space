@@ -1,67 +1,154 @@
 ---
-import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import SiteHead from '../components/SiteHead.astro';
+import '../styles/space-theme.css';
 
 const parts = [
   {
     number: 'Part 1',
     title: 'The Fundamentals',
-    description: 'Learn anchor-name, position-anchor, and position-area — the core building blocks for attaching elements to anchors.',
+    description:
+      'Learn anchor-name, position-anchor, and position-area — the core building blocks for attaching elements to anchors.',
     href: '/parts/fundamentals/',
   },
   {
     number: 'Part 2',
     title: 'Precise Control',
-    description: 'Go beyond the grid with anchor(), anchor-center, and anchor-size() for pixel-level positioning and sizing.',
+    description:
+      'Go beyond the grid with anchor(), anchor-center, and anchor-size() for pixel-level positioning and sizing.',
     href: '/parts/precise-control/',
   },
   {
     number: 'Part 3',
     title: 'Fallbacks',
-    description: 'Handle overflow gracefully with position-try-fallbacks, @position-try rules, and position-try-order.',
+    description:
+      'Handle overflow gracefully with position-try-fallbacks, @position-try rules, and position-try-order.',
     href: '/parts/fallbacks/',
   },
   {
     number: 'Part 4',
     title: 'Scoping and Visibility',
-    description: 'Manage anchor relationships at scale with anchor-scope, implicit anchors, and position-visibility.',
+    description:
+      'Manage anchor relationships at scale with anchor-scope, implicit anchors, and position-visibility.',
     href: '/parts/scoping-visibility/',
   },
 ];
 ---
 
-<StarlightPage
-  frontmatter={{
-    title: 'Anchor Positioning in Space',
-    template: 'splash',
-    hero: {
-      title: 'Anchor Positioning in Space',
-      tagline: 'A comprehensive guide to CSS Anchor Positioning — from fundamentals to advanced techniques.',
-    },
-  }}
-  hasSidebar={false}
->
-  <div class="landing-container">
-    <p class="intro">
-      CSS Anchor Positioning lets you attach absolutely positioned elements to other elements on the page — 
-      <strong>no JavaScript required</strong>. Build tooltips, dropdowns, popovers, and more with native CSS. 
-      This four-part series takes you from the basics to production-ready patterns.
-    </p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteHead
+      title="Anchor Positioning in Space"
+      description="A comprehensive guide to CSS Anchor Positioning — from fundamentals to advanced techniques."
+      pathname="/"
+    />
+  </head>
+  <body>
+    <main class="landing-shell">
+      <header class="landing-nav">
+        <a href="/" class="site-title">Anchor Positioning in Space</a>
+        <nav class="landing-links" aria-label="Primary">
+          <a href="/parts/fundamentals/">Series</a>
+          <a href="/playground/position-area/">Playground</a>
+          <a href="https://github.com/schalkneethling/anchor-positioning-in-space">GitHub</a>
+        </nav>
+      </header>
 
-    <nav class="parts-grid" aria-label="Series parts">
-      {parts.map((part) => (
-        <a href={part.href} class="part-card">
-          <span class="part-number">{part.number}</span>
-          <h2>{part.title}</h2>
-          <p>{part.description}</p>
-        </a>
-      ))}
-    </nav>
-  </div>
+      <section class="hero landing-hero">
+        <p class="landing-overline">CSS Anchor Positioning</p>
+        <h1>Anchor Positioning in Space</h1>
+        <p class="tagline">
+          A comprehensive guide to CSS Anchor Positioning, from fundamentals to
+          production-ready patterns.
+        </p>
+        <p class="intro">
+          CSS Anchor Positioning lets you attach absolutely positioned elements
+          to other elements on the page <strong>without JavaScript</strong>.
+          Build tooltips, dropdowns, popovers, and more with native CSS, then
+          learn how the pieces fit through the series and playgrounds below.
+        </p>
+      </section>
 
-  <footer class="landing-footer">
-    <p>
-      Built with <a href="https://starlight.astro.build">Starlight</a> ·
-      <a href="https://github.com/schalkneethling/anchor-positioning-in-space">GitHub</a>
-    </p>
-  </footer>
-</StarlightPage>
+      <section class="landing-container">
+        <nav class="parts-grid" aria-label="Series parts">
+          {parts.map((part) => (
+            <a href={part.href} class="part-card">
+              <span class="part-number">{part.number}</span>
+              <h2>{part.title}</h2>
+              <p>{part.description}</p>
+            </a>
+          ))}
+        </nav>
+      </section>
+
+      <footer class="landing-footer">
+        <p>
+          Continue with <a href="/parts/fundamentals/">The Fundamentals</a> or
+          explore the <a href="/playground/position-area/">position-area Playground</a>.
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(body) {
+    margin: 0;
+    min-block-size: 100vh;
+    color: var(--sl-color-text);
+    font-family: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+  }
+
+  .landing-shell {
+    min-block-size: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .landing-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-block-end: 1px solid rgba(193, 197, 214, 0.12);
+    backdrop-filter: blur(0.5rem);
+  }
+
+  .landing-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .landing-links a {
+    color: var(--sl-color-gray-2);
+    text-decoration: none;
+  }
+
+  .landing-links a:hover {
+    color: var(--sl-color-text);
+  }
+
+  .landing-hero {
+    max-inline-size: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    padding-block: 4rem 1.5rem;
+  }
+
+  .landing-overline {
+    margin: 0;
+    color: var(--sl-color-accent-high);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 720px) {
+    .landing-nav {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+</style>

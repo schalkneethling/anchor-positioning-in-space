@@ -1,0 +1,107 @@
+---
+import SiteHead from '../components/SiteHead.astro';
+import '../styles/space-theme.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteHead
+      title="404 | Anchor Positioning in Space"
+      description="The page you requested could not be found in Anchor Positioning in Space."
+      pathname="/404"
+    />
+  </head>
+  <body>
+    <main class="not-found-shell">
+      <section class="not-found-panel">
+        <p class="not-found-kicker">404</p>
+        <h1>Star Chart Missing</h1>
+        <p class="not-found-copy">
+          The page you requested is not in this sector of the map. Head back to
+          the homepage or continue with the fundamentals of CSS Anchor
+          Positioning.
+        </p>
+        <div class="not-found-actions">
+          <a href="/" class="not-found-link not-found-link-primary">Return Home</a>
+          <a href="/parts/fundamentals/" class="not-found-link">Read The Fundamentals</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(body) {
+    margin: 0;
+    min-block-size: 100vh;
+    font-family: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+    color: var(--sl-color-text);
+  }
+
+  .not-found-shell {
+    min-block-size: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+  }
+
+  .not-found-panel {
+    inline-size: min(100%, 42rem);
+    padding: 2rem;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(224, 170, 255, 0.2);
+    background: linear-gradient(
+      160deg,
+      rgba(45, 31, 71, 0.72) 0%,
+      rgba(13, 16, 33, 0.9) 100%
+    );
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.28);
+  }
+
+  .not-found-kicker {
+    margin: 0;
+    color: var(--sl-color-accent-high);
+    font-size: 0.75rem;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0.8rem 0 0.75rem;
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    line-height: 0.95;
+  }
+
+  .not-found-copy {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-block-start: 1.5rem;
+  }
+
+  .not-found-link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    padding-inline: 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(224, 170, 255, 0.22);
+    color: var(--sl-color-text);
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .not-found-link-primary {
+    background: linear-gradient(135deg, rgba(242, 142, 207, 0.28), rgba(123, 76, 230, 0.34));
+    border-color: rgba(242, 142, 207, 0.5);
+  }
+</style>

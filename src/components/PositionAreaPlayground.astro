@@ -1,0 +1,1009 @@
+---
+const id = Math.random().toString(36).slice(2, 8);
+---
+
+<div class="pa-console" data-pa-playground>
+  <div class="pa-settings-panel">
+    <div class="pa-settings-copy">
+      <p class="pa-kicker">Teaching Controls</p>
+      <h2>Choose a region, then watch how the stage resolves it.</h2>
+      <p>
+        Use these logical region controls to choose a placement, then inspect
+        the console and generated CSS below.
+      </p>
+    </div>
+
+    <div class="pa-settings-grid">
+      <div class="pa-settings-stack">
+        <fieldset class="pa-control-group">
+          <legend>Element preset</legend>
+          <p class="pa-section-note">Choose the size and behavior of the positioned element</p>
+          <div class="pa-segmented pa-segmented-wrap" role="group" aria-label="Element preset">
+            <button type="button" class="pa-chip" data-preset="chip" aria-pressed="false">
+              Chip
+            </button>
+            <button type="button" class="pa-chip" data-preset="tooltip" aria-pressed="true">
+              Tooltip
+            </button>
+            <button type="button" class="pa-chip" data-preset="menu" aria-pressed="false">
+              Menu
+            </button>
+            <button type="button" class="pa-chip" data-preset="fill" aria-pressed="false">
+              Fill region
+            </button>
+          </div>
+        </fieldset>
+
+        <fieldset class="pa-control-group pa-area-panel">
+          <legend>Area picker</legend>
+          <div class="pa-picker-section">
+            <p class="pa-section-note">Tile regions</p>
+
+            <div class="pa-value-grid" role="group" aria-label="Tile region picker">
+              <button type="button" class="pa-value-btn" data-area-key="tile-0-0" aria-pressed="false"></button>
+              <button type="button" class="pa-value-btn" data-area-key="tile-0-1" aria-pressed="true"></button>
+              <button type="button" class="pa-value-btn" data-area-key="tile-0-2" aria-pressed="false"></button>
+              <button type="button" class="pa-value-btn" data-area-key="tile-1-0" aria-pressed="false"></button>
+              <button type="button" class="pa-value-btn" data-area-key="tile-1-1" aria-pressed="false"></button>
+              <button type="button" class="pa-value-btn" data-area-key="tile-1-2" aria-pressed="false"></button>
+              <button type="button" class="pa-value-btn" data-area-key="tile-2-0" aria-pressed="false"></button>
+              <button type="button" class="pa-value-btn" data-area-key="tile-2-1" aria-pressed="false"></button>
+              <button type="button" class="pa-value-btn" data-area-key="tile-2-2" aria-pressed="false"></button>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="pa-control-group">
+          <legend>Single keyword regions</legend>
+          <p class="pa-section-note">These imply <code>span-all</code> on the other axis</p>
+
+          <div class="pa-token-row" role="group" aria-label="Single-keyword position-area values">
+            <button type="button" class="pa-token-btn" data-area-key="edge-top" aria-pressed="false"></button>
+            <button type="button" class="pa-token-btn" data-area-key="edge-right" aria-pressed="false"></button>
+            <button type="button" class="pa-token-btn" data-area-key="edge-bottom" aria-pressed="false"></button>
+            <button type="button" class="pa-token-btn" data-area-key="edge-left" aria-pressed="false"></button>
+          </div>
+        </fieldset>
+
+        <fieldset class="pa-control-group">
+          <legend>Span regions</legend>
+          <p class="pa-section-note">Multi-cell areas for menus and wider layouts</p>
+
+          <div class="pa-token-row" role="group" aria-label="Spanning position-area values">
+            <button type="button" class="pa-token-btn" data-area-key="span-top" aria-pressed="false"></button>
+            <button type="button" class="pa-token-btn" data-area-key="span-right" aria-pressed="false"></button>
+            <button type="button" class="pa-token-btn" data-area-key="span-bottom" aria-pressed="false"></button>
+            <button type="button" class="pa-token-btn" data-area-key="span-left" aria-pressed="false"></button>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <div class="pa-stage-panel">
+    <div class="pa-stage-header">
+      <p class="pa-kicker">Orbital Console</p>
+    </div>
+
+    <div class="pa-stage-wrapper">
+      <p class="pa-live-explanation" data-live-explanation aria-live="polite">
+        <code>top</code> selects the top region, which implies <code>span-all</code>
+        on the other axis. On this stage that resolves above the anchor, and the
+        element aligns toward it by default.
+      </p>
+
+      <div class="pa-stage" data-pa-stage>
+        <div class="pa-stage-noise" aria-hidden="true"></div>
+        <div class="pa-stage-grid" aria-hidden="true"></div>
+        <div class="pa-grid-lines" aria-hidden="true">
+          <span class="pa-grid-line pa-grid-line-top" data-grid-line="top"></span>
+          <span class="pa-grid-line pa-grid-line-bottom" data-grid-line="bottom"></span>
+          <span class="pa-grid-line pa-grid-line-left" data-grid-line="left"></span>
+          <span class="pa-grid-line pa-grid-line-right" data-grid-line="right"></span>
+        </div>
+
+        <div
+          class="pa-region-probe"
+          aria-hidden="true"
+          style={`position-anchor: --pa-${id}; position-area: top; inset: 0;`}
+        ></div>
+
+        <div class="pa-anchor-el" style={`anchor-name: --pa-${id};`}>
+          <span class="pa-anchor-title">Anchor trigger</span>
+          <span class="pa-anchor-meta">Reference element</span>
+        </div>
+
+        <div
+          class="pa-positioned-el"
+          data-positioned
+          style={`position-anchor: --pa-${id}; position-area: top;`}
+        >
+          <span class="pa-positioned-title">Tooltip</span>
+          <span class="pa-positioned-copy">Aligned toward the anchor.</span>
+        </div>
+      </div>
+
+      <p class="pa-unsupported" hidden>
+        Your browser does not yet support CSS anchor positioning. Try a current
+        Chromium-based browser or Safari.
+      </p>
+    </div>
+  </div>
+
+  <div class="pa-inspector-panel">
+    <div class="pa-inspector-header">
+      <p class="pa-kicker">Live Code</p>
+    </div>
+
+    <div class="pa-inspector-body">
+      <div class="pa-code-output">
+        <pre><code class="pa-code-text" data-code-output aria-live="polite"></code></pre>
+        <button type="button" class="pa-copy-btn" data-copy-btn aria-label="Copy CSS to clipboard">
+          Copy CSS
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .pa-console {
+    --pa-panel-bg: linear-gradient(
+      155deg,
+      rgba(18, 21, 42, 0.92) 0%,
+      rgba(13, 16, 33, 0.98) 55%,
+      rgba(7, 9, 18, 1) 100%
+    );
+    --pa-stage-bg: linear-gradient(
+      180deg,
+      rgba(20, 24, 46, 0.98) 0%,
+      rgba(15, 18, 35, 0.99) 52%,
+      rgba(11, 13, 27, 1) 100%
+    );
+    --pa-stage-grid: rgba(193, 197, 214, 0.045);
+    --pa-guide: rgba(224, 170, 255, 0.78);
+    --pa-region-fill: rgba(127, 90, 240, 0.16);
+    --pa-region-line: rgba(224, 170, 255, 0.9);
+    --pa-anchor-fill: rgba(90, 197, 255, 0.16);
+    --pa-anchor-line: rgba(123, 205, 255, 0.78);
+    --pa-element-fill: linear-gradient(135deg, #f28ecf 0%, #9d4edd 100%);
+    --pa-space-1: 0.35rem;
+    --pa-space-2: 0.7rem;
+    --pa-space-3: 1rem;
+    --pa-space-4: 1.5rem;
+    --pa-space-5: 2rem;
+    display: grid;
+    grid-template-columns: minmax(22rem, 0.95fr) minmax(0, 1.05fr);
+    gap: 1.5rem;
+    margin-block: 2rem;
+    align-items: start;
+  }
+
+  .pa-stage-panel,
+  .pa-settings-panel,
+  .pa-inspector-panel {
+    border: 1px solid rgba(193, 197, 214, 0.14);
+    border-radius: 1rem;
+    background: var(--pa-panel-bg);
+    box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+  }
+
+  .pa-stage-header,
+  .pa-settings-copy,
+  .pa-inspector-header,
+  .pa-inspector-body {
+    padding-inline: 1.25rem;
+  }
+
+  .pa-stage-header,
+  .pa-settings-copy,
+  .pa-inspector-header {
+    padding-block: 1.15rem 1rem;
+    border-block-end: 1px solid rgba(193, 197, 214, 0.12);
+  }
+
+  .pa-settings-panel {
+    display: grid;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .pa-settings-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--pa-space-4) 1.25rem var(--pa-space-4);
+  }
+
+  .pa-settings-stack {
+    display: grid;
+    gap: var(--pa-space-5);
+  }
+
+  .pa-stage-panel {
+    display: flex;
+    flex-direction: column;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .pa-inspector-panel {
+    display: grid;
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-rows: auto 1fr;
+    min-block-size: 100%;
+  }
+
+  .pa-inspector-body {
+    padding-block: 1.15rem 1.25rem;
+  }
+
+  .pa-kicker {
+    margin: 0;
+    color: var(--sl-color-accent-high);
+    font-size: 0.7rem;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pa-stage-wrapper {
+    padding: 1.25rem;
+  }
+
+  .pa-stage {
+    position: relative;
+    min-block-size: 31rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(224, 170, 255, 0.14);
+    background: var(--pa-stage-bg);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    isolation: isolate;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      inset 0 0 0 1px rgba(224, 170, 255, 0.03);
+  }
+
+  .pa-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 20%);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .pa-stage-noise,
+  .pa-stage-grid,
+  .pa-grid-lines,
+  .pa-region-probe {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .pa-stage-noise {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.008),
+      transparent 22%,
+      transparent 78%,
+      rgba(0, 0, 0, 0.045)
+    );
+    opacity: 0.22;
+  }
+
+  .pa-stage-grid {
+    background-image:
+      linear-gradient(to right, var(--pa-stage-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--pa-stage-grid) 1px, transparent 1px);
+    background-size: 6rem 6rem;
+    opacity: 0.8;
+  }
+
+  .pa-grid-lines {
+    z-index: 1;
+  }
+
+  .pa-grid-line {
+    position: absolute;
+    background: rgba(123, 205, 255, 0.45);
+    box-shadow: 0 0 0 1px rgba(123, 205, 255, 0.03);
+  }
+
+  .pa-grid-line-top,
+  .pa-grid-line-bottom {
+    inset-inline: 0;
+    block-size: 1px;
+  }
+
+  .pa-grid-line-left,
+  .pa-grid-line-right {
+    inset-block: 0;
+    inline-size: 1px;
+  }
+
+  .pa-region-probe {
+    z-index: 0;
+    opacity: 0;
+  }
+
+  .pa-anchor-el,
+  .pa-positioned-el {
+    position: relative;
+    z-index: 5;
+    border-radius: 0.9rem;
+    padding: 0.9rem 1rem;
+    display: grid;
+    gap: 0.2rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.18);
+  }
+
+  .pa-anchor-el {
+    background: linear-gradient(135deg, rgba(39, 68, 104, 0.96), rgba(24, 45, 73, 0.96));
+    border: 1px solid var(--pa-anchor-line);
+    color: #d8f2ff;
+    min-inline-size: 11rem;
+    max-inline-size: 14rem;
+    text-align: center;
+  }
+
+  .pa-anchor-title,
+  .pa-positioned-title {
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  .pa-anchor-meta,
+  .pa-positioned-copy {
+    color: rgba(230, 232, 240, 0.78);
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+
+  .pa-positioned-el {
+    position: absolute;
+    background: var(--pa-element-fill);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff7fd;
+    min-inline-size: 13rem;
+    max-inline-size: 17rem;
+    justify-items: start;
+  }
+
+  .pa-positioned-el[data-preset='chip'] {
+    min-inline-size: auto;
+    max-inline-size: none;
+    padding: 0.65rem 0.9rem;
+  }
+
+  .pa-positioned-el[data-preset='menu'] {
+    min-inline-size: 16rem;
+    max-inline-size: 16rem;
+    background: linear-gradient(155deg, rgba(74, 43, 123, 0.98), rgba(26, 15, 51, 0.98));
+  }
+
+  .pa-positioned-el[data-preset='fill'] {
+    inline-size: 100%;
+    block-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: none;
+    border-radius: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+    align-content: start;
+  }
+
+  .pa-positioned-el[data-preset='fill'] .pa-positioned-copy {
+    max-inline-size: 24ch;
+  }
+
+  .pa-unsupported {
+    margin: 1rem 0 0;
+    color: var(--sl-color-gray-2);
+    font-size: 0.9rem;
+  }
+
+  .pa-settings-copy h2 {
+    margin: var(--pa-space-2) 0 0.5rem;
+    color: var(--sl-color-text);
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.15;
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  }
+
+  .pa-settings-copy p:last-child {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    line-height: 1.6;
+  }
+
+  .pa-control-group {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: grid;
+    gap: var(--pa-space-3);
+  }
+
+  .pa-control-group legend {
+    padding: 0;
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pa-inline-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .pa-segmented,
+  .pa-token-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .pa-segmented-wrap {
+    row-gap: 0.6rem;
+  }
+
+  .pa-chip,
+  .pa-token-btn,
+  .pa-value-btn,
+  .pa-copy-btn {
+    border: 1px solid rgba(193, 197, 214, 0.18);
+    background: rgba(230, 232, 240, 0.02);
+    color: var(--sl-color-gray-1);
+    border-radius: 0.8rem;
+    transition:
+      border-color 0.18s ease,
+      background-color 0.18s ease,
+      transform 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .pa-chip,
+  .pa-token-btn,
+  .pa-copy-btn {
+    min-block-size: 2.6rem;
+    padding-inline: 0.9rem;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .pa-chip {
+    font-size: 0.88rem;
+  }
+
+  .pa-token-btn {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+  }
+
+  .pa-value-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .pa-value-btn {
+    min-block-size: 4.4rem;
+    padding: 0.7rem 0.55rem;
+    cursor: pointer;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.15rem;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 0.76rem;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .pa-value-btn span,
+  .pa-token-btn span {
+    display: block;
+  }
+
+  .pa-chip:hover,
+  .pa-token-btn:hover,
+  .pa-value-btn:hover,
+  .pa-copy-btn:hover {
+    border-color: rgba(224, 170, 255, 0.52);
+    background: rgba(224, 170, 255, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .pa-chip[aria-pressed='true'],
+  .pa-token-btn[aria-pressed='true'],
+  .pa-value-btn[aria-pressed='true'] {
+    border-color: rgba(242, 142, 207, 0.75);
+    background:
+      linear-gradient(135deg, rgba(242, 142, 207, 0.18), rgba(123, 76, 230, 0.18));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  }
+
+  .pa-picker-section {
+    display: grid;
+    gap: var(--pa-space-2);
+  }
+
+  .pa-picker-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: baseline;
+    margin: 0;
+    color: var(--sl-color-text);
+    font-size: 0.9rem;
+  }
+
+  .pa-picker-note {
+    color: var(--sl-color-gray-3);
+    font-size: 0.78rem;
+    text-align: right;
+  }
+
+  .pa-section-note {
+    margin: 0;
+    color: var(--sl-color-gray-3);
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .pa-live-explanation {
+    margin: 0;
+    margin-block-end: var(--pa-space-3);
+    color: var(--sl-color-gray-1);
+    line-height: 1.6;
+  }
+
+  .pa-live-explanation code,
+  .pa-picker-note code {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    color: #f6d7ee;
+  }
+
+  .pa-code-output {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    align-self: stretch;
+    gap: 0.8rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(193, 197, 214, 0.14);
+    background: rgba(4, 6, 14, 0.72);
+    padding: 1.1rem;
+    min-block-size: 22rem;
+    overflow: hidden;
+  }
+
+  .pa-code-output pre {
+    margin: 0;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .pa-code-output code {
+    color: #dfeaf5;
+    font-size: 0.84rem;
+    line-height: 1.6;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  }
+
+  .pa-copy-btn {
+    align-self: start;
+    background: rgba(224, 170, 255, 0.12);
+    color: #fff4fb;
+  }
+
+  .pa-console[data-ready='true'] .pa-anchor-el,
+  .pa-console[data-ready='true'] .pa-positioned-el {
+    animation: pa-enter 540ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes pa-enter {
+    from {
+      opacity: 0;
+      transform: translateY(0.6rem) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .pa-chip:focus-visible,
+  .pa-token-btn:focus-visible,
+  .pa-value-btn:focus-visible,
+  .pa-copy-btn:focus-visible {
+    outline: 2px solid rgba(224, 170, 255, 0.9);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 1080px) {
+    .pa-console,
+    .pa-settings-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pa-settings-panel,
+    .pa-stage-panel,
+    .pa-inspector-panel {
+      grid-column: auto;
+      grid-row: auto;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .pa-stage {
+      min-block-size: 26rem;
+    }
+
+    .pa-inline-groups {
+      grid-template-columns: 1fr;
+    }
+
+    .pa-picker-heading {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .pa-picker-note {
+      text-align: left;
+    }
+
+    .pa-code-output {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pa-chip,
+    .pa-token-btn,
+    .pa-value-btn,
+    .pa-copy-btn {
+      transition: none;
+    }
+
+    .pa-console[data-ready='true'] .pa-anchor-el,
+    .pa-console[data-ready='true'] .pa-positioned-el {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  type PresetName = 'chip' | 'tooltip' | 'menu' | 'fill';
+  const LOGICAL_AREAS = {
+    tiles: [
+      ['block-start inline-start', 'block-start center', 'block-start inline-end'],
+      ['center inline-start', 'center', 'center inline-end'],
+      ['block-end inline-start', 'block-end center', 'block-end inline-end'],
+    ],
+    edges: {
+      top: 'block-start',
+      right: 'inline-end',
+      bottom: 'block-end',
+      left: 'inline-start',
+    },
+    spans: {
+      top: 'center span-block-start',
+      right: 'span-inline-end center',
+      bottom: 'center span-block-end',
+      left: 'span-inline-start center',
+    },
+  };
+
+  const PRESET_CONTENT: Record<
+    PresetName,
+    { title: string; copy: string; aria: string }
+  > = {
+    chip: {
+      title: 'Chip',
+      copy: 'Compact annotation',
+      aria: 'Compact chip preset',
+    },
+    tooltip: {
+      title: 'Tooltip',
+      copy: 'Aligned toward the anchor.',
+      aria: 'Tooltip preset',
+    },
+    menu: {
+      title: 'Menu',
+      copy: 'Shows why wider regions are useful.',
+      aria: 'Menu preset',
+    },
+    fill: {
+      title: 'Region Fill',
+      copy: 'Fills the selected containing block.',
+      aria: 'Fill region preset',
+    },
+  };
+
+  function formatControlLabel(value: string): string {
+    const parts = value.split(' ');
+    return parts.map((part) => `<span>${part}</span>`).join('');
+  }
+
+  function formatCode(state: { area: string; preset: PresetName }): string {
+    const stageLines = ['.positioned {', `  position-area: ${state.area};`];
+
+    if (state.preset === 'fill') {
+      stageLines.push('  inline-size: 100%;', '  block-size: 100%;', '  box-sizing: border-box;');
+    }
+
+    stageLines.push('}');
+    return stageLines.join('\n');
+  }
+
+  function describePlacement(regionRect: DOMRect, anchorRect: DOMRect): string {
+    const vertical =
+      regionRect.bottom <= anchorRect.top + 2
+        ? 'above'
+        : regionRect.top >= anchorRect.bottom - 2
+          ? 'below'
+          : 'across the anchor on the block axis';
+
+    const horizontal =
+      regionRect.right <= anchorRect.left + 2
+        ? 'to the left of'
+        : regionRect.left >= anchorRect.right - 2
+          ? 'to the right of'
+          : 'across the anchor on the inline axis of';
+
+    if (vertical === 'across the anchor on the block axis' && horizontal === 'across the anchor on the inline axis of') {
+      return 'centered on the anchor';
+    }
+
+    if (vertical === 'across the anchor on the block axis') {
+      return `${horizontal} the anchor`;
+    }
+
+    if (horizontal === 'across the anchor on the inline axis of') {
+      return `${vertical} the anchor`;
+    }
+
+    return `${vertical} and ${horizontal} the anchor`;
+  }
+
+  function updateGridLines(
+    container: HTMLElement,
+    anchor: HTMLElement,
+    lines: {
+      top: HTMLElement;
+      bottom: HTMLElement;
+      left: HTMLElement;
+      right: HTMLElement;
+    },
+  ) {
+    const containerRect = container.getBoundingClientRect();
+    const anchorRect = anchor.getBoundingClientRect();
+
+    if (!containerRect.width || !containerRect.height) return;
+
+    const top = anchorRect.top - containerRect.top;
+    const bottom = anchorRect.bottom - containerRect.top;
+    const left = anchorRect.left - containerRect.left;
+    const right = anchorRect.right - containerRect.left;
+
+    lines.top.style.top = `${top}px`;
+    lines.bottom.style.top = `${bottom}px`;
+    lines.left.style.left = `${left}px`;
+    lines.right.style.left = `${right}px`;
+  }
+
+  function initPlayground(root: HTMLElement) {
+    const consoleEl = root;
+    const stage = root.querySelector<HTMLElement>('[data-pa-stage]');
+    const anchorEl = root.querySelector<HTMLElement>('.pa-anchor-el');
+    const positionedEl = root.querySelector<HTMLElement>('[data-positioned]');
+    const regionProbe = root.querySelector<HTMLElement>('.pa-region-probe');
+    const gridLines = root.querySelector<HTMLElement>('.pa-grid-lines');
+    const gridLineTop = root.querySelector<HTMLElement>('[data-grid-line="top"]');
+    const gridLineBottom = root.querySelector<HTMLElement>('[data-grid-line="bottom"]');
+    const gridLineLeft = root.querySelector<HTMLElement>('[data-grid-line="left"]');
+    const gridLineRight = root.querySelector<HTMLElement>('[data-grid-line="right"]');
+    const unsupported = root.querySelector<HTMLElement>('.pa-unsupported');
+    const copyBtn = root.querySelector<HTMLButtonElement>('[data-copy-btn]');
+    const codeOutput = root.querySelector<HTMLElement>('[data-code-output]');
+    const liveExplanation = root.querySelector<HTMLElement>('[data-live-explanation]');
+    const presetButtons = root.querySelectorAll<HTMLButtonElement>('[data-preset]');
+    const areaButtons = root.querySelectorAll<HTMLButtonElement>('[data-area-key]');
+    const positionedTitle = root.querySelector<HTMLElement>('.pa-positioned-title');
+    const positionedCopy = root.querySelector<HTMLElement>('.pa-positioned-copy');
+
+    if (
+      !stage ||
+      !anchorEl ||
+      !positionedEl ||
+      !regionProbe ||
+      !gridLines ||
+      !gridLineTop ||
+      !gridLineBottom ||
+      !gridLineLeft ||
+      !gridLineRight ||
+      !unsupported ||
+      !copyBtn ||
+      !codeOutput ||
+      !liveExplanation ||
+      !positionedTitle ||
+      !positionedCopy
+    ) {
+      return;
+    }
+
+    if (
+      !CSS.supports('anchor-name', '--test') ||
+      !CSS.supports('position-area', 'top')
+    ) {
+      stage.hidden = true;
+      unsupported.hidden = false;
+      [...presetButtons, ...areaButtons].forEach((button) => {
+        button.disabled = true;
+      });
+      copyBtn.disabled = true;
+      return;
+    }
+
+    const state: {
+      preset: PresetName;
+      areaKey: string;
+    } = {
+      preset: 'tooltip',
+      areaKey: 'edge-top',
+    };
+
+    function getAreaValue(areaKey: string): string {
+      if (areaKey.startsWith('tile-')) {
+        const [, rowIndex, colIndex] = areaKey.split('-');
+        return LOGICAL_AREAS.tiles[Number(rowIndex)][Number(colIndex)];
+      }
+
+      if (areaKey.startsWith('edge-')) {
+        return LOGICAL_AREAS.edges[areaKey.replace('edge-', '') as 'top' | 'right' | 'bottom' | 'left'];
+      }
+
+      return LOGICAL_AREAS.spans[areaKey.replace('span-', '') as 'top' | 'right' | 'bottom' | 'left'];
+    }
+
+    function syncGuideLine() {
+      const stageRect = stage.getBoundingClientRect();
+      const anchorRect = anchorEl.getBoundingClientRect();
+      const regionRect = regionProbe.getBoundingClientRect();
+
+      if (!stageRect.width || !stageRect.height) return;
+
+      updateGridLines(stage, anchorEl, {
+        top: gridLineTop,
+        bottom: gridLineBottom,
+        left: gridLineLeft,
+        right: gridLineRight,
+      });
+
+      const area = getAreaValue(state.areaKey);
+      const placement = describePlacement(regionRect, anchorRect);
+      const extra =
+        state.areaKey.startsWith('edge-')
+          ? 'which implies <code>span-all</code> on the other axis'
+          : state.areaKey.startsWith('span-')
+            ? 'which spans multiple cells of the implicit grid'
+            : 'which targets a specific tile of the implicit grid';
+      const fillNote =
+        state.preset === 'fill'
+          ? ' With the fill preset, the element expands to match that containing block.'
+          : '';
+
+      liveExplanation.innerHTML =
+        `<code>${area}</code> selects a region ${extra}. ` +
+        `On this stage that resolves ${placement}, and the element aligns toward the anchor by default.` +
+        fillNote;
+    }
+
+    function syncLabels() {
+      areaButtons.forEach((button) => {
+        const areaKey = button.dataset.areaKey!;
+        const value = getAreaValue(areaKey);
+        button.dataset.value = value;
+        button.setAttribute('aria-pressed', String(state.areaKey === areaKey));
+        button.setAttribute('aria-label', `Select position-area: ${value}`);
+        button.innerHTML = formatControlLabel(value);
+      });
+
+      presetButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.preset === state.preset));
+      });
+    }
+
+    function syncPreset() {
+      const preset = PRESET_CONTENT[state.preset];
+      positionedEl.dataset.preset = state.preset;
+      positionedEl.setAttribute('aria-label', preset.aria);
+      positionedTitle.textContent = preset.title;
+      positionedCopy.textContent = preset.copy;
+
+      if (state.preset === 'menu') {
+        positionedEl.innerHTML = `
+          <span class="pa-positioned-title">Menu</span>
+          <span class="pa-positioned-copy">Shows why wider regions are useful.</span>
+          <span class="pa-positioned-copy">Overview</span>
+          <span class="pa-positioned-copy">Telemetry</span>
+          <span class="pa-positioned-copy">Flight path</span>
+        `;
+      } else {
+        positionedEl.innerHTML = `
+          <span class="pa-positioned-title">${preset.title}</span>
+          <span class="pa-positioned-copy">${preset.copy}</span>
+        `;
+      }
+    }
+
+    function syncSelection() {
+      const area = getAreaValue(state.areaKey);
+      positionedEl.style.setProperty('position-area', area);
+      regionProbe.style.setProperty('position-area', area);
+      codeOutput.textContent = formatCode({
+        area,
+        preset: state.preset,
+      });
+      requestAnimationFrame(syncGuideLine);
+    }
+
+    function render() {
+      syncPreset();
+      syncLabels();
+      syncSelection();
+    }
+
+    presetButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        state.preset = button.dataset.preset as PresetName;
+        render();
+      });
+    });
+
+    areaButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        state.areaKey = button.dataset.areaKey!;
+        render();
+      });
+    });
+
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(codeOutput.textContent ?? '').then(() => {
+        const original = copyBtn.textContent;
+        copyBtn.textContent = 'Copied';
+        window.setTimeout(() => {
+          copyBtn.textContent = original ?? 'Copy CSS';
+        }, 1800);
+      });
+    });
+
+    const observer = new ResizeObserver(() => {
+      syncGuideLine();
+    });
+    observer.observe(stage);
+
+    render();
+    requestAnimationFrame(() => {
+      consoleEl.dataset.ready = 'true';
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-pa-playground]').forEach(initPlayground);
+</script>
