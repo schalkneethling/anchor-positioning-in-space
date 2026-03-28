@@ -68,6 +68,9 @@ export default defineConfig({
         },
       ],
       customCss: ['./src/styles/space-theme.css'],
+      components: {
+        ThemeSelect: './src/components/NoThemeSelect.astro',
+      },
       sidebar: [
         {
           label: 'The Series',
