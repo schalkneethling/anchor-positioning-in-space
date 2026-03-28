@@ -66,6 +66,14 @@ export default defineConfig({
             content: 'https://anchor-positioning-in-space.schalkneethling.com/apis-social-share.png',
           },
         },
+        {
+          tag: 'script',
+          attrs: {
+            defer: true,
+            src: 'https://cloud.umami.is/script.js',
+            'data-website-id': 'b68da2de-1723-422a-a785-6876296af749',
+          },
+        },
       ],
       customCss: ['./src/styles/space-theme.css'],
       components: {
