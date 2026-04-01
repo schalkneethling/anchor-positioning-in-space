@@ -1,0 +1,120 @@
+---
+import SiteHead from '../../components/SiteHead.astro';
+import '../../styles/space-theme.css';
+import FundamentalsQuiz from '../../components/FundamentalsQuiz.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteHead
+      title="Fundamentals Quiz | Anchor Positioning in Space"
+      description="A compact interactive quiz for learning CSS anchor-name, position-anchor, and position-area."
+      pathname="/playground/fundamentals-quiz/"
+    />
+  </head>
+  <body>
+    <main class="playground-shell">
+      <header class="playground-header">
+        <a href="/" class="site-title">Anchor Positioning in Space</a>
+        <nav class="playground-nav" aria-label="Secondary">
+          <a href="/parts/fundamentals/">The Fundamentals</a>
+          <a href="/playground/position-area/">position-area Playground</a>
+          <a href="/playground/fundamentals-quiz/" aria-current="page">Fundamentals Quiz</a>
+        </nav>
+      </header>
+
+      <section class="playground-intro">
+        <p class="playground-kicker">Quiz Toy</p>
+        <h1>Anchor Positioning Fundamentals Quiz</h1>
+        <p>
+          Work through a compact set of random questions covering
+          <code>anchor-name</code>, <code>position-anchor</code>, and
+          <code>position-area</code>. Each question shows a live anchored UI so
+          the answer stays tied to real CSS behavior.
+        </p>
+      </section>
+
+      <section class="playground-content">
+        <FundamentalsQuiz />
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(body) {
+    margin: 0;
+    min-block-size: 100vh;
+    color: var(--sl-color-text);
+    font-family: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+  }
+
+  .playground-shell {
+    max-inline-size: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    padding-block-end: 3rem;
+  }
+
+  .playground-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    padding-block: 1rem;
+  }
+
+  .playground-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .playground-nav a {
+    color: var(--sl-color-gray-2);
+    text-decoration: none;
+  }
+
+  .playground-nav a[aria-current='page'],
+  .playground-nav a:hover {
+    color: var(--sl-color-text);
+  }
+
+  .playground-intro {
+    max-inline-size: 56rem;
+    padding-block: 2rem 0.75rem;
+  }
+
+  .playground-kicker {
+    margin: 0;
+    color: var(--sl-color-accent-high);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0.6rem 0 1rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1;
+  }
+
+  .playground-intro > p:last-of-type {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+
+  .playground-intro code {
+    margin-inline: 0.08rem;
+  }
+
+  @media (max-width: 720px) {
+    .playground-header {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+</style>

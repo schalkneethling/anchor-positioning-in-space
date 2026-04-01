@@ -1,0 +1,1393 @@
+---
+const id = Math.random().toString(36).slice(2, 8);
+---
+
+<section class="quiz-shell" data-quiz-root data-anchor-name={`--quiz-${id}`}>
+  <div class="quiz-workspace" data-quiz-workspace>
+    <header class="quiz-workspace-header">
+      <div>
+        <p class="quiz-kicker">Interactive Quiz</p>
+        <h2>Test your anchor positioning fundamentals.</h2>
+      </div>
+
+      <dl class="quiz-stats" aria-label="Quiz progress">
+        <div>
+          <dt>Question</dt>
+          <dd data-question-count>1 / 10</dd>
+        </div>
+        <div>
+          <dt>Score</dt>
+          <dd data-score-count>0</dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="quiz-stage-card">
+      <div class="quiz-stage-frame">
+        <div class="quiz-stage" data-stage>
+          <div class="quiz-stage-grid" aria-hidden="true"></div>
+
+          <div class="quiz-stage-anchor" data-anchor style={`anchor-name: --quiz-${id};`}>
+            <span class="quiz-anchor-title" data-anchor-title>Launch button</span>
+            <span class="quiz-anchor-copy" data-anchor-copy>Potential anchor</span>
+          </div>
+
+          <div
+            class="quiz-stage-positioned"
+            data-positioned
+            style={`position-anchor: --quiz-${id}; position-area: block-start center;`}
+          >
+            <span class="quiz-positioned-title" data-positioned-title>Status tooltip</span>
+            <span class="quiz-positioned-copy" data-positioned-copy>Positioned element</span>
+          </div>
+        </div>
+
+        <p class="quiz-unsupported" data-unsupported hidden>
+          Your browser does not yet support CSS anchor positioning. Try a current
+          Chromium-based browser or Safari.
+        </p>
+      </div>
+    </section>
+
+    <section class="quiz-panel">
+      <div class="quiz-question-block">
+        <p class="quiz-question-type" data-question-type>Multiple choice</p>
+        <h3 data-question-prompt>Loading question...</h3>
+        <p class="quiz-question-meta" data-question-meta></p>
+      </div>
+
+      <div class="quiz-answer-block">
+        <div class="quiz-choice-list" data-choice-list role="group" aria-label="Answer choices"></div>
+
+        <div class="quiz-input-block" data-input-block hidden>
+          <label class="quiz-input-label" for={`quiz-answer-${id}`}>Type your CSS answer</label>
+          <div class="quiz-input-wrap">
+            <input
+              id={`quiz-answer-${id}`}
+              class="quiz-answer-input"
+              data-answer-input
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Type a CSS declaration"
+            />
+            <button type="button" class="quiz-hint-btn" data-hint-btn>Show hint</button>
+          </div>
+          <div class="quiz-input-tools">
+            <p
+              class="quiz-hint-reveal"
+              id={`quiz-input-hint-${id}`}
+              data-hint-reveal
+              hidden
+            ></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="quiz-action-btn quiz-action-btn-primary" data-submit-btn>
+          Submit answer
+        </button>
+        <button type="button" class="quiz-action-btn" data-next-btn hidden>
+          Next question
+        </button>
+        <button type="button" class="quiz-action-btn" data-restart-btn hidden>
+          Start a new run
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <section class="quiz-feedback" data-feedback hidden>
+    <p class="quiz-feedback-status" data-feedback-status></p>
+    <p class="quiz-feedback-copy" data-feedback-copy></p>
+    <p class="quiz-feedback-link-row">
+      Read more in the course:
+      <a data-learn-more-link href="/parts/fundamentals/" target="_blank" rel="noreferrer">
+        The Fundamentals
+      </a>
+      <span class="quiz-feedback-link-note">(opens in a new tab)</span>
+    </p>
+    <div class="quiz-reveal">
+      <p class="quiz-reveal-label">Revealed CSS</p>
+      <pre><code data-reveal-code></code></pre>
+    </div>
+  </section>
+
+  <section class="quiz-summary" data-summary hidden>
+    <p class="quiz-kicker">Run Complete</p>
+    <h3 data-summary-heading>You finished the quiz.</h3>
+    <p class="quiz-summary-copy" data-summary-copy></p>
+  </section>
+</section>
+
+<style>
+  .quiz-shell {
+    --quiz-panel-bg: linear-gradient(
+      155deg,
+      rgba(18, 21, 42, 0.92) 0%,
+      rgba(13, 16, 33, 0.98) 55%,
+      rgba(7, 9, 18, 1) 100%
+    );
+    --quiz-stage-bg: linear-gradient(
+      180deg,
+      rgba(18, 24, 46, 0.98) 0%,
+      rgba(14, 18, 35, 0.99) 100%
+    );
+    --quiz-border: rgba(193, 197, 214, 0.14);
+    display: grid;
+    gap: 1rem;
+  }
+
+  .quiz-feedback[hidden],
+  .quiz-summary[hidden],
+  .quiz-choice-list[hidden],
+  .quiz-input-block[hidden],
+  .quiz-hint-btn[hidden],
+  .quiz-hint-reveal[hidden],
+  .quiz-unsupported[hidden],
+  .quiz-action-btn[hidden] {
+    display: none !important;
+  }
+
+  .quiz-workspace,
+  .quiz-feedback,
+  .quiz-summary {
+    border: 1px solid var(--quiz-border);
+    border-radius: 1rem;
+    background: var(--quiz-panel-bg);
+    box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.22);
+  }
+
+  .quiz-workspace-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: start;
+    grid-column: 1 / -1;
+    padding-block-end: 0.2rem;
+  }
+
+  .quiz-kicker,
+  .quiz-question-type,
+  .quiz-reveal-label {
+    margin: 0;
+    color: var(--sl-color-accent-high);
+    font-size: 0.72rem;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .quiz-workspace-header h2,
+  .quiz-panel h3,
+  .quiz-summary h3 {
+    margin: 0.55rem 0 0;
+    color: var(--sl-color-text);
+    line-height: 1.1;
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  }
+
+  .quiz-workspace-header h2 {
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+  }
+
+  .quiz-stats {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(5.5rem, auto));
+    gap: 0.7rem;
+  }
+
+  .quiz-stats div {
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.85rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(193, 197, 214, 0.08);
+  }
+
+  .quiz-stats dt {
+    color: var(--sl-color-gray-3);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .quiz-stats dd {
+    margin: 0.35rem 0 0;
+    color: var(--sl-color-text);
+    font-size: 1rem;
+  }
+
+  .quiz-workspace {
+    padding: 1.15rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .quiz-stage-card,
+  .quiz-panel {
+    min-inline-size: 0;
+  }
+
+  .quiz-stage-frame {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .quiz-stage {
+    position: relative;
+    min-block-size: 18.5rem;
+    border-radius: 0.95rem;
+    border: 1px solid rgba(224, 170, 255, 0.14);
+    background: var(--quiz-stage-bg);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    isolation: isolate;
+  }
+
+  .quiz-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 22%);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .quiz-stage-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(193, 197, 214, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(193, 197, 214, 0.04) 1px, transparent 1px);
+    background-size: 4.75rem 4.75rem;
+    opacity: 0.8;
+  }
+
+  .quiz-stage-anchor,
+  .quiz-stage-positioned {
+    position: relative;
+    z-index: 2;
+    border-radius: 0.9rem;
+    padding: 0.8rem 0.95rem;
+    display: grid;
+    gap: 0.2rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.18);
+  }
+
+  .quiz-stage-anchor {
+    background: linear-gradient(135deg, rgba(39, 68, 104, 0.96), rgba(24, 45, 73, 0.96));
+    border: 1px solid rgba(123, 205, 255, 0.78);
+    color: #d8f2ff;
+    min-inline-size: 9rem;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .quiz-stage-positioned {
+    position: absolute;
+    background: linear-gradient(135deg, #8f3f8e 0%, #6e36b3 100%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #fff9fe;
+    min-inline-size: 10rem;
+    max-inline-size: 14rem;
+  }
+
+  .quiz-stage-positioned[data-variant='menu'] {
+    min-inline-size: 12rem;
+    background: linear-gradient(155deg, rgba(58, 33, 103, 0.98), rgba(24, 14, 47, 0.98));
+  }
+
+  .quiz-stage-positioned[data-variant='badge'] {
+    min-inline-size: 7.25rem;
+    justify-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #7a3c98 0%, #5c2f96 100%);
+  }
+
+  .quiz-stage-positioned[data-variant='callout'] {
+    min-inline-size: 11rem;
+    max-inline-size: 15rem;
+    background: linear-gradient(135deg, #94479a 0%, #763bb9 100%);
+  }
+
+  .quiz-anchor-title,
+  .quiz-positioned-title {
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  .quiz-anchor-copy,
+  .quiz-question-meta,
+  .quiz-feedback-copy,
+  .quiz-summary-copy,
+  .quiz-unsupported {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .quiz-positioned-copy {
+    margin: 0;
+    color: rgba(255, 245, 252, 0.92);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .quiz-panel {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .quiz-question-block {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .quiz-question-type {
+    color: #d8f2ff;
+  }
+
+  .quiz-choice-list {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .quiz-choice-control,
+  .quiz-action-btn,
+  .quiz-answer-input {
+    border-radius: 0.9rem;
+    border: 1px solid rgba(193, 197, 214, 0.18);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--sl-color-text);
+    font: inherit;
+  }
+
+  .quiz-choice-option {
+    position: relative;
+  }
+
+  .quiz-choice-control {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .quiz-choice-label {
+    inline-size: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0.9rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 0.9rem;
+    border: 1px solid rgba(193, 197, 214, 0.18);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--sl-color-text);
+    transition:
+      border-color 0.18s ease,
+      background-color 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .quiz-choice-indicator {
+    inline-size: 1rem;
+    block-size: 1rem;
+    border-radius: 999px;
+    border: 2px solid rgba(193, 197, 214, 0.52);
+    background: transparent;
+    box-sizing: border-box;
+    transition:
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      background-color 0.18s ease;
+  }
+
+  .quiz-choice-text {
+    min-inline-size: 0;
+  }
+
+  .quiz-choice-label:hover,
+  .quiz-action-btn:hover {
+    border-color: rgba(224, 170, 255, 0.52);
+    background: rgba(224, 170, 255, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .quiz-choice-control:checked + .quiz-choice-label {
+    border-color: rgba(242, 142, 207, 0.75);
+    background:
+      linear-gradient(135deg, rgba(242, 142, 207, 0.18), rgba(123, 76, 230, 0.18));
+  }
+
+  .quiz-choice-control:checked + .quiz-choice-label .quiz-choice-indicator {
+    border-color: rgba(255, 235, 247, 0.92);
+    box-shadow: inset 0 0 0 3px rgba(242, 142, 207, 0.92);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .quiz-choice-control:focus-visible + .quiz-choice-label {
+    outline: 2px solid rgba(224, 170, 255, 0.9);
+    outline-offset: 2px;
+  }
+
+  .quiz-input-block {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .quiz-input-wrap {
+    position: relative;
+  }
+
+  .quiz-input-tools {
+    display: block;
+    min-block-size: 1.5rem;
+  }
+
+  .quiz-input-label {
+    color: var(--sl-color-gray-2);
+    font-size: 0.9rem;
+  }
+
+  .quiz-answer-input {
+    min-block-size: 3rem;
+    inline-size: 100%;
+    box-sizing: border-box;
+    padding: 0.95rem 8rem 0.95rem 0.9rem;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  }
+
+  .quiz-hint-btn {
+    position: absolute;
+    inset-inline-end: 0.7rem;
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+    min-block-size: 2rem;
+    padding-inline: 0.8rem;
+    border-radius: 999px;
+    border: 1px solid rgba(123, 205, 255, 0.35);
+    background: rgba(123, 205, 255, 0.08);
+    color: #d8f2ff;
+    font: inherit;
+    cursor: pointer;
+    transition:
+      border-color 0.18s ease,
+      background-color 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .quiz-hint-btn:hover {
+    border-color: rgba(123, 205, 255, 0.6);
+    background: rgba(123, 205, 255, 0.14);
+    transform: translateY(calc(-50% - 1px));
+  }
+
+  .quiz-hint-reveal {
+    margin: 0;
+    color: #d8f2ff;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  }
+
+  .quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .quiz-action-btn {
+    min-block-size: 2.7rem;
+    padding-inline: 1rem;
+    cursor: pointer;
+    transition:
+      border-color 0.18s ease,
+      background-color 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .quiz-action-btn-primary {
+    background: linear-gradient(135deg, #5e3568 0%, #4b2d73 100%);
+    border-color: rgba(201, 142, 255, 0.45);
+    color: #fff9fe;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  .quiz-feedback,
+  .quiz-summary {
+    padding: 1.05rem 1.15rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .quiz-feedback-status {
+    margin: 0;
+    color: var(--sl-color-text);
+    font-weight: 700;
+  }
+
+  .quiz-feedback-link-row {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    line-height: 1.55;
+  }
+
+  .quiz-feedback-link-row a {
+    color: #d8f2ff;
+    text-decoration: none;
+  }
+
+  .quiz-feedback-link-row a:hover {
+    color: var(--sl-color-accent-high);
+  }
+
+  .quiz-feedback-link-note {
+    color: var(--sl-color-gray-3);
+  }
+
+  .quiz-feedback[data-tone='success'] .quiz-feedback-status {
+    color: #dff7e6;
+  }
+
+  .quiz-feedback[data-tone='warning'] .quiz-feedback-status {
+    color: #ffd5bf;
+  }
+
+  .quiz-reveal {
+    padding: 0.95rem 1rem;
+    border-radius: 0.9rem;
+    background: rgba(4, 6, 14, 0.72);
+    border: 1px solid rgba(193, 197, 214, 0.14);
+  }
+
+  .quiz-reveal pre {
+    margin: 0.7rem 0 0;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .quiz-reveal code {
+    color: #dfeaf5;
+    font-size: 0.84rem;
+    line-height: 1.6;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  }
+
+  .quiz-action-btn:focus-visible,
+  .quiz-answer-input:focus-visible,
+  .quiz-hint-btn:focus-visible {
+    outline: 2px solid rgba(224, 170, 255, 0.9);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .quiz-workspace {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .quiz-workspace-header {
+      flex-direction: column;
+    }
+
+    .quiz-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      inline-size: 100%;
+    }
+
+    .quiz-workspace {
+      padding: 1rem;
+    }
+
+    .quiz-stage {
+      min-block-size: 15.5rem;
+    }
+
+    .quiz-stage-positioned {
+      min-inline-size: 8.5rem;
+      max-inline-size: 11rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quiz-choice-label,
+    .quiz-action-btn,
+    .quiz-hint-btn {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { confetti } from '@tsparticles/confetti';
+
+  type QuestionType = 'multiple-choice' | 'typed-css';
+  type ScenarioVariant = 'tooltip' | 'menu' | 'badge' | 'callout';
+
+  type ScenarioPreset = {
+    variant: ScenarioVariant;
+    area: string;
+    anchorTitle: string;
+    anchorCopy: string;
+    positionedTitle: string;
+    positionedCopy: string;
+  };
+
+  type MultipleChoiceQuestion = {
+    id: string;
+    type: 'multiple-choice';
+    prompt: string;
+    meta: string;
+    scenario: ScenarioPreset;
+    choices: string[];
+    correctIndex: number;
+    explanation: string;
+    revealCss: string;
+    learnMore: {
+      href: string;
+      label: string;
+    };
+  };
+
+  type TypedQuestion = {
+    id: string;
+    type: 'typed-css';
+    prompt: string;
+    meta: string;
+    scenario: ScenarioPreset;
+    placeholder: string;
+    acceptedAnswers: string[];
+    explanation: string;
+    revealCss: string;
+    learnMore: {
+      href: string;
+      label: string;
+    };
+  };
+
+  type Question = MultipleChoiceQuestion | TypedQuestion;
+
+  const QUESTIONS: Question[] = [
+    {
+      id: 'area-top-tooltip',
+      type: 'multiple-choice',
+      prompt: 'Which position-area value places the tooltip above the anchor and centered inline?',
+      meta: 'Study the rendered tooltip before choosing.',
+      scenario: {
+        variant: 'tooltip',
+        area: 'block-start center',
+        anchorTitle: 'Launch button',
+        anchorCopy: 'Reference element',
+        positionedTitle: 'Status tooltip',
+        positionedCopy: 'Above the trigger',
+      },
+      choices: [
+        'position-area: block-start center;',
+        'position-area: center inline-end;',
+        'position-area: block-end center;',
+        'position-area: center;',
+      ],
+      correctIndex: 0,
+      explanation:
+        '`block-start center` targets the region above the anchor while keeping the positioned element centered on the inline axis.',
+      revealCss: '.tooltip {\n  position-anchor: --launch-button;\n  position-area: block-start center;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#placing-the-element-the-position-area-property',
+        label: 'Placing the Element: The position-area Property',
+      },
+    },
+    {
+      id: 'anchor-name-element',
+      type: 'multiple-choice',
+      prompt: 'Which element should define anchor-name in this tooltip pattern?',
+      meta: 'Choose the element that acts as the positioning reference.',
+      scenario: {
+        variant: 'tooltip',
+        area: 'block-start center',
+        anchorTitle: 'Launch button',
+        anchorCopy: 'Reference element',
+        positionedTitle: 'Status tooltip',
+        positionedCopy: 'Attached panel',
+      },
+      choices: [
+        'The trigger button',
+        'The positioned tooltip',
+        'Both elements',
+        'Neither element',
+      ],
+      correctIndex: 0,
+      explanation:
+        'The trigger becomes the anchor by defining `anchor-name`. The positioned tooltip then points at that named anchor with `position-anchor`.',
+      revealCss: '.trigger {\n  anchor-name: --launch-button;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#naming-your-anchor',
+        label: 'Naming Your Anchor',
+      },
+    },
+    {
+      id: 'position-anchor-property',
+      type: 'multiple-choice',
+      prompt: 'Which declaration belongs on the positioned element to connect it to the named anchor?',
+      meta: 'The question is about linking, not choosing a region.',
+      scenario: {
+        variant: 'menu',
+        area: 'block-end center',
+        anchorTitle: 'Account menu',
+        anchorCopy: 'Named anchor',
+        positionedTitle: 'Menu panel',
+        positionedCopy: 'Attached below',
+      },
+      choices: [
+        'position-anchor: --account-menu;',
+        'anchor-name: --account-menu;',
+        'position-area: --account-menu;',
+        'anchor-size: --account-menu;',
+      ],
+      correctIndex: 0,
+      explanation:
+        '`position-anchor` tells the positioned element which named anchor it should attach to.',
+      revealCss: '.menu {\n  position-anchor: --account-menu;\n  position-area: block-end center;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#pointing-to-your-anchor',
+        label: 'Pointing to Your Anchor',
+      },
+    },
+    {
+      id: 'type-anchor-name',
+      type: 'typed-css',
+      prompt: 'Type the declaration that names the trigger as `--help-chip`.',
+      meta: 'Write the declaration only, not the selector block.',
+      scenario: {
+        variant: 'badge',
+        area: 'center inline-end',
+        anchorTitle: 'Help chip',
+        anchorCopy: 'Reference element',
+        positionedTitle: 'Info badge',
+        positionedCopy: 'Attached inline',
+      },
+      placeholder: 'anchor-name: --help-chip;',
+      acceptedAnswers: ['anchor-name: --help-chip;'],
+      explanation:
+        '`anchor-name` is the property that turns an element into a named anchor other elements can reference.',
+      revealCss: '.trigger {\n  anchor-name: --help-chip;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#naming-your-anchor',
+        label: 'Naming Your Anchor',
+      },
+    },
+    {
+      id: 'type-position-anchor',
+      type: 'typed-css',
+      prompt: 'Type the declaration that connects the tooltip to the anchor named `--help-chip`.',
+      meta: 'Keep it to one declaration.',
+      scenario: {
+        variant: 'badge',
+        area: 'center inline-end',
+        anchorTitle: 'Help chip',
+        anchorCopy: 'Named anchor',
+        positionedTitle: 'Info badge',
+        positionedCopy: 'Positioned element',
+      },
+      placeholder: 'position-anchor: --help-chip;',
+      acceptedAnswers: ['position-anchor: --help-chip;'],
+      explanation:
+        'Once an anchor has a name, the positioned element references it with `position-anchor`.',
+      revealCss: '.badge {\n  position-anchor: --help-chip;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#pointing-to-your-anchor',
+        label: 'Pointing to Your Anchor',
+      },
+    },
+    {
+      id: 'area-right',
+      type: 'multiple-choice',
+      prompt: 'The badge is rendered to the right of the anchor. Which position-area value matches that placement?',
+      meta: 'Think in terms of the implicit 3×3 grid around the anchor.',
+      scenario: {
+        variant: 'badge',
+        area: 'center inline-end',
+        anchorTitle: 'Help chip',
+        anchorCopy: 'Reference element',
+        positionedTitle: 'Info badge',
+        positionedCopy: 'Right side',
+      },
+      choices: [
+        'position-area: center inline-start;',
+        'position-area: center inline-end;',
+        'position-area: block-start center;',
+        'position-area: block-end center;',
+      ],
+      correctIndex: 1,
+      explanation:
+        '`center inline-end` selects the tile beside the anchor on the inline-end side.',
+      revealCss: '.badge {\n  position-area: center inline-end;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#the-grid',
+        label: 'The Grid',
+      },
+    },
+    {
+      id: 'type-position-area-bottom',
+      type: 'typed-css',
+      prompt: 'Type the declaration that places the menu below the trigger and centered inline.',
+      meta: 'This is the most common dropdown-style placement.',
+      scenario: {
+        variant: 'menu',
+        area: 'block-end center',
+        anchorTitle: 'Account menu',
+        anchorCopy: 'Reference element',
+        positionedTitle: 'Menu panel',
+        positionedCopy: 'Below the trigger',
+      },
+      placeholder: 'position-area: block-end center;',
+      acceptedAnswers: ['position-area: block-end center;'],
+      explanation:
+        '`block-end center` targets the region below the anchor while keeping the element centered.',
+      revealCss: '.menu {\n  position-area: block-end center;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#basic-usage',
+        label: 'Basic Usage',
+      },
+    },
+    {
+      id: 'positioned-element-choice',
+      type: 'multiple-choice',
+      prompt: 'Which element should receive position-anchor and position-area in this callout example?',
+      meta: 'Choose the element that gets positioned relative to the anchor.',
+      scenario: {
+        variant: 'callout',
+        area: 'block-start inline-end',
+        anchorTitle: 'Upgrade link',
+        anchorCopy: 'Anchor trigger',
+        positionedTitle: 'Plan callout',
+        positionedCopy: 'Positioned card',
+      },
+      choices: [
+        'The trigger link',
+        'The positioned callout',
+        'The page wrapper',
+        'Every ancestor',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The positioned UI piece gets `position-anchor` and usually `position-area`; the trigger only needs `anchor-name`.',
+      revealCss: '.callout {\n  position-anchor: --upgrade-link;\n  position-area: block-start inline-end;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#pointing-to-your-anchor',
+        label: 'Pointing to Your Anchor',
+      },
+    },
+    {
+      id: 'area-top-left',
+      type: 'multiple-choice',
+      prompt: 'Which value targets the tile above and to the inline-start side of the anchor?',
+      meta: 'This is the top-left tile in the implicit grid.',
+      scenario: {
+        variant: 'callout',
+        area: 'block-start inline-start',
+        anchorTitle: 'Upgrade link',
+        anchorCopy: 'Reference element',
+        positionedTitle: 'Plan callout',
+        positionedCopy: 'Offset to top-left',
+      },
+      choices: [
+        'position-area: block-start inline-start;',
+        'position-area: block-end inline-start;',
+        'position-area: center inline-start;',
+        'position-area: block-start center;',
+      ],
+      correctIndex: 0,
+      explanation:
+        'The two-keyword value combines the block and inline directions to select a specific tile.',
+      revealCss: '.callout {\n  position-area: block-start inline-start;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#the-grid',
+        label: 'The Grid',
+      },
+    },
+    {
+      id: 'type-position-area-center',
+      type: 'typed-css',
+      prompt: 'Type the declaration that resolves the positioned element directly over the anchor.',
+      meta: 'This question uses the single central tile.',
+      scenario: {
+        variant: 'badge',
+        area: 'center',
+        anchorTitle: 'Focus target',
+        anchorCopy: 'Reference element',
+        positionedTitle: 'Center badge',
+        positionedCopy: 'Centered on the anchor',
+      },
+      placeholder: 'position-area: center;',
+      acceptedAnswers: ['position-area: center;'],
+      explanation:
+        '`center` selects the middle tile of the implicit grid, placing the element over the anchor region.',
+      revealCss: '.badge {\n  position-area: center;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#the-grid',
+        label: 'The Grid',
+      },
+    },
+    {
+      id: 'anchor-name-purpose',
+      type: 'multiple-choice',
+      prompt: 'What does anchor-name do in an anchor positioning setup?',
+      meta: 'Focus on the role of the property itself.',
+      scenario: {
+        variant: 'tooltip',
+        area: 'block-start center',
+        anchorTitle: 'Launch button',
+        anchorCopy: 'Potential anchor',
+        positionedTitle: 'Status tooltip',
+        positionedCopy: 'Attached UI',
+      },
+      choices: [
+        'It names the anchor element so positioned elements can reference it.',
+        'It moves the positioned element to a grid region.',
+        'It sizes the anchor based on the tooltip.',
+        'It creates the fallback list for overflow.',
+      ],
+      correctIndex: 0,
+      explanation:
+        '`anchor-name` gives the reference element an addressable anchor name.',
+      revealCss: '.trigger {\n  anchor-name: --launch-button;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#naming-your-anchor',
+        label: 'Naming Your Anchor',
+      },
+    },
+    {
+      id: 'type-anchor-name-menu',
+      type: 'typed-css',
+      prompt: 'Type the declaration that names the trigger as `--account-menu`.',
+      meta: 'This declaration belongs on the trigger, not the positioned menu.',
+      scenario: {
+        variant: 'menu',
+        area: 'block-end center',
+        anchorTitle: 'Account menu',
+        anchorCopy: 'Trigger element',
+        positionedTitle: 'Menu panel',
+        positionedCopy: 'Attached below',
+      },
+      placeholder: 'anchor-name: --account-menu;',
+      acceptedAnswers: ['anchor-name: --account-menu;'],
+      explanation:
+        'The trigger needs `anchor-name` so the menu can reference it later.',
+      revealCss: '.trigger {\n  anchor-name: --account-menu;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#naming-your-anchor',
+        label: 'Naming Your Anchor',
+      },
+    },
+    {
+      id: 'below-vs-above',
+      type: 'multiple-choice',
+      prompt: 'Which value would move the current tooltip from above the anchor to below it while staying centered?',
+      meta: 'Only the block direction should change.',
+      scenario: {
+        variant: 'tooltip',
+        area: 'block-end center',
+        anchorTitle: 'Launch button',
+        anchorCopy: 'Reference element',
+        positionedTitle: 'Status tooltip',
+        positionedCopy: 'Below the trigger',
+      },
+      choices: [
+        'position-area: block-start center;',
+        'position-area: center inline-end;',
+        'position-area: block-end center;',
+        'position-area: center;',
+      ],
+      correctIndex: 2,
+      explanation:
+        'Switching from `block-start` to `block-end` moves the region from above the anchor to below it.',
+      revealCss: '.tooltip {\n  position-area: block-end center;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#placing-the-element-the-position-area-property',
+        label: 'Placing the Element: The position-area Property',
+      },
+    },
+    {
+      id: 'which-snippet-links',
+      type: 'multiple-choice',
+      prompt: 'Which CSS snippet correctly links the positioned panel to its named anchor?',
+      meta: 'Pick the snippet that uses the right property on the right element.',
+      scenario: {
+        variant: 'callout',
+        area: 'center inline-end',
+        anchorTitle: 'Upgrade link',
+        anchorCopy: 'Named anchor',
+        positionedTitle: 'Plan callout',
+        positionedCopy: 'Positioned panel',
+      },
+      choices: [
+        '.callout { anchor-name: --upgrade-link; }',
+        '.callout { position-anchor: --upgrade-link; }',
+        '.callout { position-area: --upgrade-link; }',
+        '.callout { anchor-size: --upgrade-link; }',
+      ],
+      correctIndex: 1,
+      explanation:
+        'The positioned element uses `position-anchor` to point at the name defined on the trigger.',
+      revealCss: '.callout {\n  position-anchor: --upgrade-link;\n}',
+      learnMore: {
+        href: '/parts/fundamentals/#pointing-to-your-anchor',
+        label: 'Pointing to Your Anchor',
+      },
+    },
+  ];
+
+  function normalizeCssValue(value: string): string {
+    return value
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      .replace(/\s*:\s*/g, ':')
+      .replace(/\s*;\s*/g, ';')
+      .replace(/;$/, '');
+  }
+
+  function createHint(answer: string): string {
+    const trimmed = answer.trim();
+    const midpoint = Math.max(Math.ceil(trimmed.length / 2), 8);
+    return `${trimmed.slice(0, midpoint)}…`;
+  }
+
+  function shuffle<T>(items: T[]): T[] {
+    const next = [...items];
+    for (let index = next.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+    }
+    return next;
+  }
+
+  function initQuiz(root: HTMLElement) {
+    const stage = root.querySelector<HTMLElement>('[data-stage]');
+    const anchorEl = root.querySelector<HTMLElement>('[data-anchor]');
+    const positionedEl = root.querySelector<HTMLElement>('[data-positioned]');
+    const anchorTitle = root.querySelector<HTMLElement>('[data-anchor-title]');
+    const anchorCopy = root.querySelector<HTMLElement>('[data-anchor-copy]');
+    const positionedTitle = root.querySelector<HTMLElement>('[data-positioned-title]');
+    const positionedCopy = root.querySelector<HTMLElement>('[data-positioned-copy]');
+    const unsupported = root.querySelector<HTMLElement>('[data-unsupported]');
+    const questionCount = root.querySelector<HTMLElement>('[data-question-count]');
+    const scoreCount = root.querySelector<HTMLElement>('[data-score-count]');
+    const questionType = root.querySelector<HTMLElement>('[data-question-type]');
+    const questionPrompt = root.querySelector<HTMLElement>('[data-question-prompt]');
+    const questionMeta = root.querySelector<HTMLElement>('[data-question-meta]');
+    const choiceList = root.querySelector<HTMLElement>('[data-choice-list]');
+    const inputBlock = root.querySelector<HTMLElement>('[data-input-block]');
+    const answerInput = root.querySelector<HTMLInputElement>('[data-answer-input]');
+    const hintBtn = root.querySelector<HTMLButtonElement>('[data-hint-btn]');
+    const hintReveal = root.querySelector<HTMLElement>('[data-hint-reveal]');
+    const submitBtn = root.querySelector<HTMLButtonElement>('[data-submit-btn]');
+    const nextBtn = root.querySelector<HTMLButtonElement>('[data-next-btn]');
+    const restartBtn = root.querySelector<HTMLButtonElement>('[data-restart-btn]');
+    const feedback = root.querySelector<HTMLElement>('[data-feedback]');
+    const feedbackStatus = root.querySelector<HTMLElement>('[data-feedback-status]');
+    const feedbackCopy = root.querySelector<HTMLElement>('[data-feedback-copy]');
+    const learnMoreLink = root.querySelector<HTMLAnchorElement>('[data-learn-more-link]');
+    const revealCode = root.querySelector<HTMLElement>('[data-reveal-code]');
+    const summary = root.querySelector<HTMLElement>('[data-summary]');
+    const summaryHeading = root.querySelector<HTMLElement>('[data-summary-heading]');
+    const summaryCopy = root.querySelector<HTMLElement>('[data-summary-copy]');
+
+    if (
+      !stage ||
+      !anchorEl ||
+      !positionedEl ||
+      !anchorTitle ||
+      !anchorCopy ||
+      !positionedTitle ||
+      !positionedCopy ||
+      !unsupported ||
+      !questionCount ||
+      !scoreCount ||
+      !questionType ||
+      !questionPrompt ||
+      !questionMeta ||
+      !choiceList ||
+      !inputBlock ||
+      !answerInput ||
+      !hintBtn ||
+      !hintReveal ||
+      !submitBtn ||
+      !nextBtn ||
+      !restartBtn ||
+      !feedback ||
+      !feedbackStatus ||
+      !feedbackCopy ||
+      !learnMoreLink ||
+      !revealCode ||
+      !summary ||
+      !summaryHeading ||
+      !summaryCopy
+    ) {
+      return;
+    }
+
+    if (
+      !CSS.supports('anchor-name', '--test') ||
+      !CSS.supports('position-area', 'top')
+    ) {
+      stage.hidden = true;
+      unsupported.hidden = false;
+      submitBtn.disabled = true;
+      nextBtn.disabled = true;
+      restartBtn.disabled = true;
+      hintBtn.disabled = true;
+      answerInput.disabled = true;
+      return;
+    }
+
+    const state = {
+      run: [] as Question[],
+      index: 0,
+      score: 0,
+      submitted: false,
+      selectedChoice: -1,
+      hintShown: false,
+    };
+
+    function getCurrentQuestion(): Question | undefined {
+      return state.run[state.index];
+    }
+
+    function setScenario(question: Question) {
+      const { scenario } = question;
+      positionedEl.dataset.variant = scenario.variant;
+      anchorTitle.textContent = scenario.anchorTitle;
+      anchorCopy.textContent = scenario.anchorCopy;
+      positionedTitle.textContent = scenario.positionedTitle;
+      positionedCopy.textContent = scenario.positionedCopy;
+      positionedEl.style.setProperty('position-area', scenario.area);
+    }
+
+    function renderChoices(question: MultipleChoiceQuestion) {
+      choiceList.hidden = false;
+      inputBlock.hidden = true;
+      const groupName = `quiz-choice-${question.id}`;
+      choiceList.innerHTML = question.choices
+        .map(
+          (choice, index) => `
+            <div class="quiz-choice-option">
+              <input
+                class="quiz-choice-control"
+                data-choice-index="${index}"
+                type="radio"
+                name="${groupName}"
+                id="${groupName}-${index}"
+                ${state.selectedChoice === index ? 'checked' : ''}
+              />
+              <label class="quiz-choice-label" for="${groupName}-${index}">
+                <span class="quiz-choice-indicator" aria-hidden="true"></span>
+                <span class="quiz-choice-text">${choice}</span>
+              </label>
+            </div>
+          `,
+        )
+        .join('');
+
+      choiceList.querySelectorAll<HTMLInputElement>('[data-choice-index]').forEach((input) => {
+        input.addEventListener('change', () => {
+          if (state.submitted) return;
+          state.selectedChoice = Number(input.dataset.choiceIndex);
+        });
+      });
+    }
+
+    function renderTyped(question: TypedQuestion) {
+      choiceList.hidden = true;
+      inputBlock.hidden = false;
+      answerInput.placeholder = 'Type a CSS declaration';
+      answerInput.removeAttribute('aria-describedby');
+      answerInput.value = '';
+      hintReveal.hidden = true;
+      hintReveal.textContent = '';
+      hintBtn.hidden = false;
+      if (!state.submitted) {
+        answerInput.focus({ preventScroll: true });
+      }
+    }
+
+    function renderCurrentQuestion() {
+      const question = getCurrentQuestion();
+      if (!question) return;
+
+      if (state.index >= state.run.length) {
+        return;
+      }
+
+      setScenario(question);
+      questionCount.textContent = `${state.index + 1} / ${state.run.length}`;
+      scoreCount.textContent = String(state.score);
+      questionType.textContent = question.type === 'multiple-choice' ? 'Multiple choice' : 'Type the CSS';
+      questionPrompt.textContent = question.prompt;
+      questionMeta.textContent = question.meta;
+      feedback.hidden = true;
+      summary.hidden = true;
+      submitBtn.hidden = false;
+      nextBtn.hidden = true;
+      restartBtn.hidden = true;
+      state.hintShown = false;
+      hintBtn.hidden = true;
+
+      if (question.type === 'multiple-choice') {
+        renderChoices(question);
+      } else {
+        renderTyped(question);
+      }
+    }
+
+    function startRun() {
+      state.run = shuffle(QUESTIONS).slice(0, 10);
+      state.index = 0;
+      state.score = 0;
+      state.submitted = false;
+      state.selectedChoice = -1;
+      state.hintShown = false;
+      renderCurrentQuestion();
+    }
+
+    function burstConfetti(originPosition?: { x: number; y: number }) {
+      void confetti({
+        count: 70,
+        spread: 75,
+        startVelocity: 42,
+        decay: 0.92,
+        gravity: 0.95,
+        scalar: 0.95,
+        ticks: 220,
+        zIndex: 9999,
+        position: originPosition
+          ? {
+              x: originPosition.x,
+              y: originPosition.y,
+            }
+          : { x: 50, y: 22 },
+        colors: ['#f28ecf', '#7bcfff', '#ffe082', '#9d4edd', '#7be39b'],
+        disableForReducedMotion: true,
+      });
+    }
+
+    function showFeedback(
+      isCorrect: boolean,
+      question: Question,
+      triggerPosition?: { x: number; y: number },
+    ) {
+      feedback.hidden = false;
+      feedback.dataset.tone = isCorrect ? 'success' : 'warning';
+      feedbackStatus.textContent = isCorrect ? 'Correct answer' : 'Not quite';
+      feedbackCopy.textContent = question.explanation;
+      learnMoreLink.href = question.learnMore.href;
+      learnMoreLink.textContent = question.learnMore.label;
+      revealCode.textContent = question.revealCss;
+      submitBtn.hidden = true;
+      nextBtn.hidden = false;
+      if (isCorrect) {
+        burstConfetti(triggerPosition);
+      }
+    }
+
+    function finishRun() {
+      summary.hidden = false;
+      summaryHeading.textContent =
+        state.score >= 8 ? 'Strong fundamentals pass.' : 'Quiz run complete.';
+      summaryCopy.textContent = `You answered ${state.score} of ${state.run.length} questions correctly. Start a new run for a fresh random set.`;
+      feedback.hidden = true;
+      choiceList.hidden = true;
+      inputBlock.hidden = true;
+      submitBtn.hidden = true;
+      nextBtn.hidden = true;
+      restartBtn.hidden = false;
+      hintBtn.hidden = true;
+      questionType.textContent = 'Results';
+      questionPrompt.textContent = 'Review your score, then start a new run when you are ready.';
+      questionMeta.textContent = 'Each new run draws a fresh set of 10 questions from the quiz bank.';
+    }
+
+    function gradeTypedAnswer(question: TypedQuestion): boolean {
+      const normalizedInput = normalizeCssValue(answerInput.value);
+      return question.acceptedAnswers.some((answer) => normalizeCssValue(answer) === normalizedInput);
+    }
+
+    hintBtn.addEventListener('click', () => {
+      const question = getCurrentQuestion();
+      if (!question || question.type !== 'typed-css' || state.submitted) return;
+
+      state.hintShown = true;
+      hintReveal.textContent = `Hint: ${createHint(question.acceptedAnswers[0])}`;
+      hintReveal.hidden = false;
+      hintBtn.hidden = true;
+      answerInput.setAttribute('aria-describedby', hintReveal.id);
+      answerInput.focus({ preventScroll: true });
+    });
+
+    submitBtn.addEventListener('click', () => {
+      const question = getCurrentQuestion();
+      if (!question || state.submitted) return;
+
+      let isCorrect = false;
+
+      if (question.type === 'multiple-choice') {
+        if (state.selectedChoice < 0) {
+          return;
+        }
+        isCorrect = state.selectedChoice === question.correctIndex;
+      } else {
+        if (!answerInput.value.trim()) {
+          return;
+        }
+        isCorrect = gradeTypedAnswer(question);
+      }
+
+      const submitRect = submitBtn.getBoundingClientRect();
+      const triggerPosition = {
+        x: ((submitRect.left + submitRect.width / 2) / window.innerWidth) * 100,
+        y: ((submitRect.top + submitRect.height / 2) / window.innerHeight) * 100,
+      };
+
+      state.submitted = true;
+      if (isCorrect) {
+        state.score += 1;
+        scoreCount.textContent = String(state.score);
+      }
+      showFeedback(isCorrect, question, triggerPosition);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      state.index += 1;
+      state.submitted = false;
+      state.selectedChoice = -1;
+      if (state.index >= state.run.length) {
+        finishRun();
+        return;
+      }
+      renderCurrentQuestion();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      startRun();
+    });
+
+    startRun();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-quiz-root]').forEach(initQuiz);
+</script>
