@@ -50,6 +50,7 @@ const parts = [
         <nav class="landing-links" aria-label="Primary">
           <a href="/parts/fundamentals/">Series</a>
           <a href="/playground/position-area/">Playground</a>
+          <a href="/playground/fundamentals-quiz/">Quiz</a>
           <a href="https://github.com/schalkneethling/anchor-positioning-in-space">GitHub</a>
         </nav>
       </header>
@@ -79,12 +80,33 @@ const parts = [
             </a>
           ))}
         </nav>
+
+        <section class="toy-grid" aria-label="Interactive toys">
+          <a href="/playground/position-area/" class="toy-card">
+            <span class="toy-label">Playground</span>
+            <h2><code>position-area</code> Explorer</h2>
+            <p>
+              Pick logical regions, inspect the live stage, and see the generated
+              CSS update in place.
+            </p>
+          </a>
+
+          <a href="/playground/fundamentals-quiz/" class="toy-card">
+            <span class="toy-label">Quiz Toy</span>
+            <h2>Fundamentals Quiz</h2>
+            <p>
+              Answer visual and CSS questions about <code>anchor-name</code>,
+              <code>position-anchor</code>, and <code>position-area</code>.
+            </p>
+          </a>
+        </section>
       </section>
 
       <footer class="landing-footer">
         <p>
           Continue with <a href="/parts/fundamentals/">The Fundamentals</a> or
-          explore the <a href="/playground/position-area/">position-area Playground</a>.
+          explore the <a href="/playground/position-area/">position-area Playground</a> and
+          the <a href="/playground/fundamentals-quiz/">Fundamentals Quiz</a>.
         </p>
       </footer>
     </main>
@@ -130,6 +152,13 @@ const parts = [
     color: var(--sl-color-text);
   }
 
+  .landing-container {
+    max-inline-size: 64rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    padding-block: 1rem 4rem;
+  }
+
   .landing-hero {
     max-inline-size: 72rem;
     margin-inline: auto;
@@ -145,10 +174,61 @@ const parts = [
     text-transform: uppercase;
   }
 
+  .toy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-block-start: 3rem;
+  }
+
+  .toy-card {
+    background: linear-gradient(
+      135deg,
+      rgba(20, 31, 57, 0.55) 0%,
+      rgba(13, 16, 33, 0.82) 100%
+    );
+    border: 1px solid rgba(123, 205, 255, 0.18);
+    border-radius: 1rem;
+    padding: 1.4rem;
+    text-decoration: none;
+    color: var(--sl-color-text);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .toy-card:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 0.5rem 2rem rgba(123, 205, 255, 0.18);
+    border-color: rgba(123, 205, 255, 0.42);
+  }
+
+  .toy-label {
+    display: inline-block;
+    margin-block-end: 0.5rem;
+    color: #d8f2ff;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .toy-card h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.25rem;
+  }
+
+  .toy-card p {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    line-height: 1.6;
+  }
+
   @media (max-width: 720px) {
     .landing-nav {
       flex-direction: column;
       align-items: start;
+    }
+
+    .toy-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
