@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.38.2",
-    "@tsparticles/confetti": "^3.9.1",
+    "@tsparticles/confetti": "^4.2.1",
     "astro": "^6.0.8",
     "sharp": "^0.33.0"
   }
