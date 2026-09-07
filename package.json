@@ -13,6 +13,6 @@
     "@astrojs/starlight": "^0.39.3",
     "@tsparticles/confetti": "^3.9.1",
     "astro": "^6.4.8",
-    "sharp": "^0.33.0"
+    "sharp": "^0.35.4"
   }
 }
